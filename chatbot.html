@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>掛號科別小助理</title>
+    <style>
+        /* CSS is the same as the previous example - no changes needed here */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background-color: #f4f4f4; }
+        body { display: flex; flex-direction: column; }
+        .chat-container { flex-grow: 1; overflow-y: auto; padding: 15px; background-color: #ffffff; display: flex; flex-direction: column; }
+        .message { max-width: 85%; padding: 10px 15px; border-radius: 18px; margin-bottom: 10px; word-wrap: break-word; line-height: 1.4; }
+        .user-message { background-color: #007bff; color: white; align-self: flex-end; border-bottom-right-radius: 5px; }
+        .bot-message { background-color: #e9e9eb; color: black; align-self: flex-start; border-bottom-left-radius: 5px; white-space: pre-wrap; /* Preserve line breaks from backend */ }
+        .input-area { display: flex; padding: 10px; border-top: 1px solid #ccc; background-color: #f8f8f8; }
+        #messageInput { flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 20px; margin-right: 10px; font-size: 16px; }
+        #sendButton { padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 16px; }
+        #status { text-align: center; padding: 5px; font-size: 12px; color: #666; background-color: #eee; height: 25px; line-height: 15px;} /* Adjust line-height */
+         /* Style for disclaimer */
+        .bot-message strong { display: block; margin-top: 8px; font-size: 0.9em; color: #555;}
+
+    </style>
+</head>
+<body>
+    <div id="status">初始化...</div>
+    <div class="chat-container" id="chatbox">
+        <div class="bot-message">你好！請描述您的症狀，我會根據掛號指南嘗試建議科別。<br><br>**免責聲明：此建議僅基於提供的文件內容分析，不能取代專業醫師的診斷。如有疑問，請務必諮詢醫師。**</div>
+    </div>
+    <div class="input-area">
+        <input type="text" id="messageInput" placeholder="請說出或輸入您的症狀...">
+        <button id="sendButton">傳送</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const messageInput = document.getElementById('messageInput');
+            const sendButton = document.getElementById('sendButton');
+            const chatbox = document.getElementById('chatbox');
+            const statusDiv = document.getElementById('status');
+            // --- CHANGE: Define Backend URL ---
+            const BACKEND_URL = 'http://127.0.0.1:5000/recommend'; // Adjust if your backend runs elsewhere (e.g., network IP)
+
+            // --- Web Speech API Setup (Same as before) ---
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            let recognition;
+            let recognizing = false;
+            let ignoreOnend = false;
+            let finalTranscript = ''; // Keep track of final transcript from voice
+
+            if (!SpeechRecognition) {
+                statusDiv.textContent = '抱歉，您的瀏覽器不支援語音辨識。';
+                messageInput.placeholder = '無法使用語音輸入';
+                messageInput.disabled = true;
+                sendButton.disabled = true;
+                return;
+            }
+
+            recognition = new SpeechRecognition();
+            recognition.lang = 'zh-TW';
+            recognition.continuous = true;
+            recognition.interimResults = true;
+
+            recognition.onstart = () => {
+                recognizing = true;
+                statusDiv.textContent = '正在聆聽...';
+                console.log('語音辨識已啟動');
+            };
+
+            recognition.onerror = (event) => {
+                recognizing = false;
+                console.error('語音辨識錯誤:', event.error);
+                 let errorMsg = `錯誤: ${event.error}`;
+                 if (event.error === 'no-speech') errorMsg = '聽不到聲音，請再試一次。';
+                 else if (event.error === 'audio-capture') errorMsg = '無法取得麥克風音訊。';
+                 else if (event.error === 'not-allowed') errorMsg = '麥克風權限未允許。';
+                 statusDiv.textContent = errorMsg;
+                ignoreOnend = true; // Stop automatic restart on error
+            };
+
+             recognition.onend = () => {
+                 recognizing = false;
+                 statusDiv.textContent = '辨識停止';
+                 console.log('語音辨識已停止');
+                 if (!ignoreOnend) {
+                     console.log('自動重新啟動辨識...');
+                     setTimeout(() => { if (!recognizing) { try { recognition.start(); } catch(e){ console.error("重啟失敗", e); statusDiv.textContent = '重啟辨識失敗';} } }, 250);
+                 } else {
+                      console.log('忽略本次 onend 事件');
+                      ignoreOnend = false; // Reset flag
+                      statusDiv.textContent = '準備聆聽 (若權限允許)';
+                 }
+            };
+
+
+            recognition.onresult = (event) => {
+                let interimTranscript = '';
+                // Reset finalTranscript for each new result event coming in continuous mode
+                finalTranscript = '';
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    const transcript = event.results[i][0].transcript;
+                    if (event.results[i].isFinal) {
+                        finalTranscript += transcript;
+                    } else {
+                        interimTranscript += transcript;
+                    }
+                }
+                // Update input field with the latest interim or final result
+                messageInput.value = finalTranscript || interimTranscript;
+                 if (finalTranscript) {
+                     console.log("最終結果:", finalTranscript);
+                     // Optional: Add a slight pause visual indicator or similar
+                 }
+            };
+
+            // --- Chat Functions ---
+            function addMessage(text, sender) {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
+
+                // Render bold text for disclaimer correctly
+                if (sender === 'bot') {
+                    // Replace **...** with <strong>...</strong> for HTML rendering
+                     text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                     messageElement.innerHTML = text; // Use innerHTML to render the <strong> tag
+                } else {
+                    messageElement.textContent = text;
+                }
+
+                chatbox.appendChild(messageElement);
+                chatbox.scrollTop = chatbox.scrollHeight; // Scroll to bottom
+            }
+
+            // --- MODIFIED: Send Message to Backend ---
+            async function sendMessage() { // Make function async to use await
+                const messageText = messageInput.value.trim();
+                if (messageText === '') {
+                    return; // Don't send empty messages
+                }
+
+                addMessage(messageText, 'user'); // Display user message immediately
+                messageInput.value = ''; // Clear input field
+                finalTranscript = ''; // Clear voice transcript buffer
+
+                 // Display a "Thinking..." message for the bot
+                const thinkingMessage = document.createElement('div');
+                thinkingMessage.classList.add('message', 'bot-message');
+                thinkingMessage.textContent = '正在分析中，請稍候...';
+                chatbox.appendChild(thinkingMessage);
+                chatbox.scrollTop = chatbox.scrollHeight;
+
+                console.log(`Sending symptoms to backend: ${messageText}`);
+
+                try {
+                    const response = await fetch(BACKEND_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ symptoms: messageText }),
+                    });
+
+                    // Remove the "Thinking..." message
+                     chatbox.removeChild(thinkingMessage);
+
+                    if (!response.ok) {
+                        // Handle HTTP errors (like 500 Internal Server Error)
+                        const errorData = await response.json().catch(() => ({ reason: `伺服器錯誤，狀態碼: ${response.status}` }));
+                        console.error('Backend error:', response.status, errorData);
+                        addMessage(`抱歉，處理時發生錯誤：${errorData.reason || response.statusText}`, 'bot');
+                        return;
+                    }
+
+                    const data = await response.json(); // Parse JSON response from backend
+                    console.log('Received recommendation:', data);
+
+                    // Display bot response (department and reason)
+                    let botMsg = `建議掛號科別：${data.department}\n原因：${data.reason}`;
+                    addMessage(botMsg, 'bot');
+
+                } catch (error) {
+                     // Remove the "Thinking..." message in case of network error
+                     if (chatbox.contains(thinkingMessage)) {
+                        chatbox.removeChild(thinkingMessage);
+                     }
+                    console.error('Error sending message to backend:', error);
+                    addMessage(`抱歉，無法連接到後端服務。請檢查後端是否正在運行 (${BACKEND_URL}) 以及網路連線。錯誤: ${error.message}`, 'bot');
+                }
+            }
+
+            // --- Event Listeners (Same as before) ---
+            sendButton.addEventListener('click', sendMessage);
+            messageInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // --- Start Recognition (Same as before, with permission check) ---
+             try {
+                 if (navigator.permissions) {
+                     navigator.permissions.query({ name: 'microphone' }).then(permissionStatus => {
+                         statusDiv.textContent = `麥克風權限: ${permissionStatus.state}`;
+                         if (permissionStatus.state === 'granted' || permissionStatus.state === 'prompt') {
+                             console.log('權限允許或將請求，啟動辨識...');
+                             if (!recognizing) recognition.start(); // Start only if not already running
+                         } else {
+                             console.log('麥克風權限已被拒絕');
+                              statusDiv.textContent = '麥克風權限已被拒絕，請手動開啟。';
+                         }
+                         permissionStatus.onchange = () => {
+                             statusDiv.textContent = `麥克風權限更新為: ${permissionStatus.state}`;
+                             if (permissionStatus.state === 'granted' && !recognizing) {
+                                 recognition.start();
+                             } else if (permissionStatus.state !== 'granted' && recognizing) {
+                                 ignoreOnend = true; recognition.stop();
+                             }
+                         };
+                     }).catch(err => {
+                          console.warn("無法查詢權限，直接嘗試啟動:", err);
+                          statusDiv.textContent = '請求權限中...';
+                          if (!recognizing) recognition.start();
+                     });
+                 } else {
+                     console.warn("不支援權限查詢 API，直接嘗試啟動");
+                      statusDiv.textContent = '請求權限中...';
+                     if (!recognizing) recognition.start();
+                 }
+             } catch (e) {
+                 console.error("啟動語音辨識失敗:", e);
+                 statusDiv.textContent = '啟動語音辨識失敗。';
+                 messageInput.disabled = true; sendButton.disabled = true;
+             }
+        });
+    </script>
+</body>
+</html>
