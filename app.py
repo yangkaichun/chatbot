@@ -166,8 +166,9 @@ def get_department_recommendation(symptoms, pdf_knowledge):
 app = Flask(__name__)
 # Enable CORS for requests from the frontend (running as file:// or different port)
 # For production, restrict the origins allowed: CORS(app, origins=["your_frontend_domain"])
-CORS(app)
 
+frontend_origin = "https://yangkaichun.github.io/chatbot/" # <--- 替換成你的 GitHub Pages URL (沒有結尾的 /)
+CORS(app, origins=[frontend_origin], supports_credentials=True) # 只允許你的前端來源
 # --- Load PDF content when the Flask app starts ---
 print("Initializing backend...")
 PDF_KNOWLEDGE_BASE = extract_text_from_pdf(PDF_PATH)
