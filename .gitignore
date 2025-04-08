@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+env/
+venv/
+.venv/
+
+# IDE/Editor folders
+.vscode/
+.idea/
+
+# API Keys (如果意外寫入) - 強烈建議使用環境變數!
+# *.key
+# *api_key.txt
+
+# Large files (Consider alternatives like Git LFS or cloud storage if PDF is huge)
+# *.pdf
