@@ -2,3 +2,4 @@ Flask
 google-generativeai
 PyPDF2
 Flask-Cors
+gunicorn
