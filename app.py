@@ -3,7 +3,7 @@ import PyPDF2 # Library for reading PDFs
 import google.generativeai as genai
 from flask import Flask, request, jsonify
 from flask_cors import CORS # Needed for requests from browser JS
-
+# AIzaSyBUsjAjcMFZlS-osK573-vIzGe4O3chlSE
 # --- Configuration ---
 # Load API key from environment variable
 #API_KEY = os.getenv("GEMINI_API_KEY")
