@@ -7,6 +7,7 @@ from flask_cors import CORS # Needed for requests from browser JS
 # --- Configuration ---
 # Load API key from environment variable
 API_KEY = os.getenv("GEMINI_API_KEY")
+API_KEY = "AIzaSyBUsjAjcMFZlS-osK573-vIzGe4O3chlSE"
 if not API_KEY:
     # If running directly in some IDEs, you might need to set it differently
     # or temporarily hardcode for testing (NOT RECOMMENDED for production)
