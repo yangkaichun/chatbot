@@ -7,12 +7,12 @@ from flask_cors import CORS # Needed for requests from browser JS
 # --- Configuration ---
 # Load API key from environment variable
 API_KEY = os.getenv("GEMINI_API_KEY")
-API_KEY = "AIzaSyDmlup5rO0bTxurtM6ArQQPoQJhcyEC4Rc"
+# API_KEY = "AIzaSyDmlup5rO0bTxurtM6ArQQPoQJhcyEC4Rc"
 if not API_KEY:
     # If running directly in some IDEs, you might need to set it differently
     # or temporarily hardcode for testing (NOT RECOMMENDED for production)
-    API_KEY = "AIzaSyDmlup5rO0bTxurtM6ArQQPoQJhcyEC4Rc" # Replace with your actual key only for local testing
-    #print("Warning: GEMINI_API_KEY environment variable not found. Attempting to proceed without it or using a placeholder if set above.")
+   # API_KEY = "AIzaSyDmlup5rO0bTxurtM6ArQQPoQJhcyEC4Rc" # Replace with your actual key only for local testing
+    print("Warning: GEMINI_API_KEY environment variable not found. Attempting to proceed without it or using a placeholder if set above.")
     # raise ValueError("GEMINI_API_KEY environment variable not set. Please set it before running.")
     # For now, we allow it to proceed but Gemini call will likely fail without a key.
 
