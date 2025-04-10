@@ -1,301 +1,75 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>掛號科別推薦 v4</title> <style>
-        /* CSS remains the same as v3 */
-        :root {
-            --user-msg-bg: #dcf8c6;
-            --bot-msg-bg: #fff;
-            --input-bg: #fff;
-            --bg-color: #f0f0f0;
-            --text-color: #333;
-            --button-bg: #007bff;
-            --button-active-bg: #0056b3;
-            --voice-bg: #5bc0de;
-            --voice-recording-bg: #d9534f;
-            --border-color: #ccc;
-            --chat-height: 85vh;
-            --input-height: 15vh;
-        }
-        html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; display: flex; flex-direction: column; background-color: var(--bg-color); color: var(--text-color); font-size: 16px; }
-        #chat-container { height: var(--chat-height); overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; }
-        .message { padding: 10px 15px; border-radius: 18px; max-width: 85%; word-wrap: break-word; line-height: 1.4; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-        .user-message { background-color: var(--user-msg-bg); align-self: flex-end; border-bottom-right-radius: 5px; margin-left: auto; }
-        .bot-message { background-color: var(--bot-msg-bg); align-self: flex-start; border: 1px solid #eee; border-bottom-left-radius: 5px; margin-right: auto; }
-        #input-area { height: var(--input-height); min-height: 50px; max-height: var(--input-height); display: flex; align-items: center; padding: 8px 10px; border-top: 1px solid var(--border-color); background-color: var(--input-bg); box-sizing: border-box; flex-shrink: 0; }
-        #user-input { flex-grow: 1; padding: 10px 15px; border: 1px solid var(--border-color); border-radius: 20px; margin-right: 8px; font-size: inherit; line-height: 1.4; min-height: 24px; max-height: calc(var(--input-height) - 30px); resize: none; overflow-y: auto; box-sizing: border-box; font-family: inherit; }
-        button { padding: 0; border: none; border-radius: 50%; cursor: pointer; background-color: transparent; color: var(--button-bg); font-size: 24px; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease; }
-        #send-button { margin-left: 5px; color: var(--button-bg); }
-        #voice-button { color: var(--voice-bg); }
-        #voice-button.recording { color: white; background-color: var(--voice-recording-bg); }
-        button:active { opacity: 0.7; }
-        #chat-container::-webkit-scrollbar { width: 0; background: transparent; }
-        #chat-container { scrollbar-width: none; -ms-overflow-style: none; }
-    </style>
-</head>
-<body>
+// --- !!! MODIFIED handleUserInput Function in chatbot_v5.html !!! ---
+async function handleUserInput(text) { // Add async keyword
+    if (!text) return;
 
-    <div id="chat-container">
-        <div class="message bot-message">您好！請點擊 🎤 開始說話，或直接輸入文字描述您的症狀。(首次使用可能需允許麥克風權限)</div>
-    </div>
+    const lastUserMessage = chatContainer.querySelector('.user-message:last-child');
+    if (!lastUserMessage || lastUserMessage.textContent !== text) {
+         addUserMessage(text);
+    }
 
-    <div id="input-area">
-        <textarea id="user-input" placeholder="正在聆聽..." rows="1"></textarea>
-        <button id="voice-button" title="語音輸入">🎤</button>
-        <button id="send-button" title="發送" style="display: none;">➤</button>
-    </div>
+    userInput.value = '';
+    adjustTextareaHeight();
+    sendButton.style.display = 'none';
 
-    <script>
-        const chatContainer = document.getElementById('chat-container');
-        const userInput = document.getElementById('user-input');
-        const sendButton = document.getElementById('send-button');
-        const voiceButton = document.getElementById('voice-button');
+    // --- Call Backend API ---
+    // IMPORTANT: Replace with the ACTUAL URL of your deployed backend service
+    const BACKEND_URL = 'https://your-deployed-backend-url.example.com/api/recommend'; // <--- CHANGE THIS
 
-        // --- Knowledge Base (Explicit PDF/Gemini sources) ---
-        const knowledgeBase = [
-             // --- From PDF (Source: PDF) ---
-            { keywords: ["膽", "痛", "外科", "開刀", "肝膽"], department: "一般外科", source: "PDF" }, // Added "肝膽" from text
-            { keywords: ["後頭", "粉瘤", "開刀"], department: "一般外科", source: "PDF" },
-            { keywords: ["腳", "傷口", "腫", "紅", "鐵", "紮到", "刺到", "腳背"], department: "一般外科", source: "PDF" }, // Added "腳背"
-            { keywords: ["腳", "傷口", "感染", "化膿", "腳背"], department: "感染科", source: "PDF" }, // Added "腳背"
-            { keywords: ["胸部", "異物", "硬塊", "乳房"], department: "乳房外科", source: "PDF" }, // Assuming "胸部有異物" points to 乳房外科 based on context
-            { keywords: ["分泌物", "增加", "性交", "出血", "骨盆", "痛", "HPV", "淋病"], department: "婦產部 婦科", source: "PDF" }, // Added keywords from description
-            { keywords: ["子宮", "脫垂", "骨盆", "壓迫感", "下腹脹", "排尿困難", "排便困難"], department: "婦產部 婦科", source: "PDF" }, // Added keywords
-            { keywords: ["骨盆腔", "發炎", "分泌物", "異常", "發燒", "下腹痛", "PID"], department: "婦產部 婦科", source: "PDF" }, // Added keywords
-            { keywords: ["流產", "懷孕", "出血", "腹痛", "組織排出"], department: "婦產部 產科", source: "PDF" },
-            { keywords: ["子宮外孕", "異位妊娠", "懷孕", "下腹痛", "出血", "昏厥", "低血壓"], department: "婦產部 產科", source: "PDF" }, // Added keywords
-            { keywords: ["懷孕", "晚期", "出血", "劇烈", "腹痛", "胎動", "減少", "胎盤", "剝離"], department: "婦產部 產科", source: "PDF" }, // Added keywords
+    // Add a temporary "Thinking..." message for the bot
+    const thinkingMsg = addBotMessage("AI 正在思考中..."); // Store the element if you want to update/remove it later
 
-             // --- From Gemini (Source: Gemini, Constrained by PDF Depts) ---
-            { keywords: ["割", "痔瘡"], department: "一般外科", source: "Gemini" },
-            { keywords: ["疝氣", "脫腸"], department: "一般外科", source: "Gemini" },
-            { keywords: ["甲狀腺", "腫大", "結節"], department: "一般外科", source: "Gemini" },
-            { keywords: ["皮膚", "腫塊", "脂肪瘤", "切除"], department: "一般外科", source: "Gemini" },
-            { keywords: ["闌尾炎", "盲腸炎", "右下腹", "痛"], department: "一般外科", source: "Gemini" },
-            { keywords: ["發燒", "不明原因", "持續", "畏寒"], department: "感染科", source: "Gemini" },
-            { keywords: ["蜂窩性組織炎"], department: "感染科", source: "Gemini" },
-            { keywords: ["肺炎", "反覆", "治療效果不佳"], department: "感染科", source: "Gemini" }, // If complex
-            { keywords: ["乳頭", "分泌物", "凹陷", "皮膚橘皮"], department: "乳房外科", source: "Gemini" },
-            { keywords: ["乳房", "疼痛", "週期性"], department: "乳房外科", source: "Gemini" },
-            { keywords: ["月經", "不規則", "異常", "經痛", "嚴重"], department: "婦產部 婦科", source: "Gemini" },
-            { keywords: ["更年期", "症狀", "盜汗", "熱潮紅"], department: "婦產部 婦科", source: "Gemini" },
-            { keywords: ["陰道", "搔癢", "異味"], department: "婦產部 婦科", source: "Gemini" },
-            { keywords: ["避孕", "諮詢", "方式"], department: "婦產部 婦科", source: "Gemini" },
-            { keywords: ["懷孕", "產檢", "檢查"], department: "婦產部 產科", source: "Gemini" },
-            { keywords: ["生產", "諮詢", "接生"], department: "婦產部 產科", source: "Gemini" },
-            { keywords: ["產後", "回診", "復原"], department: "婦產部 產科", source: "Gemini" },
-            { keywords: ["不孕", "諮詢", "檢查"], department: "婦產部 婦科", source: "Gemini" }
-        ];
-
-        // --- Speech Recognition Setup (Same as v3) ---
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        let recognition;
-        let isRecording = false;
-        let finalTranscript = '';
-
-        if (SpeechRecognition) {
-            try {
-                recognition = new SpeechRecognition();
-                recognition.continuous = false;
-                recognition.lang = 'zh-TW';
-                recognition.interimResults = true;
-                recognition.maxAlternatives = 1;
-
-                recognition.onresult = (event) => {
-                    let interimTranscript = '';
-                    finalTranscript = '';
-                    for (let i = event.resultIndex; i < event.results.length; ++i) {
-                        if (event.results[i].isFinal) {
-                            finalTranscript += event.results[i][0].transcript;
-                        } else {
-                            interimTranscript += event.results[i][0].transcript;
-                        }
-                    }
-                    userInput.value = finalTranscript || interimTranscript;
-                    adjustTextareaHeight();
-                    if (finalTranscript) {
-                        const processedTranscript = finalTranscript.trim();
-                        if (processedTranscript) {
-                            handleUserInput(processedTranscript);
-                        } else {
-                             console.log("Final transcript was empty after trimming.");
-                             userInput.placeholder = "請點擊 🎤 或輸入文字...";
-                        }
-                        finalTranscript = ''; // Clear memory
-                    }
-                };
-
-                recognition.onerror = (event) => {
-                    console.error('Speech Recognition Error:', event.error, event.message);
-                    let errorMessage = "語音辨識時發生未知錯誤。";
-                    switch (event.error) { /* Cases from v3 */
-                       case 'no-speech': errorMessage = "我沒有聽到聲音，請您靠近麥克風再試一次。"; break;
-                       case 'audio-capture': errorMessage = "無法取得麥克風音訊，請檢查系統設定或瀏覽器是否已授權。"; break;
-                       case 'not-allowed': errorMessage = "您尚未允許或已拒絕使用麥克風，請至瀏覽器設定中開啟權限後再試。"; break;
-                       case 'network': errorMessage = "網路連線錯誤，語音辨識需要穩定的網路連線。"; break;
-                       case 'aborted': if (!isRecording) return; errorMessage = "語音辨識被中止。"; break; // Ignore if stopped manually
-                       case 'service-not-allowed': errorMessage = "瀏覽器或作業系統禁止使用語音辨識服務，請檢查相關設定。"; break;
-                       case 'bad-grammar': errorMessage = "語音辨識語法設定錯誤。"; break;
-                       default: errorMessage = `發生未預期的錯誤 (${event.error})，請稍後再試。`;
-                    }
-                    if(errorMessage) addBotMessage(errorMessage);
-                    userInput.placeholder = "請點擊 🎤 或輸入文字...";
-                    if(isRecording) toggleRecordingState();
-                };
-
-                recognition.onstart = () => { userInput.placeholder = "正在聆聽..."; };
-                recognition.onend = () => { if(isRecording) toggleRecordingState(); userInput.placeholder = "請點擊 🎤 或輸入文字..."; };
-
-            } catch (e) { /* Error handling from v3 */
-                console.error("無法初始化 SpeechRecognition:", e);
-                addBotMessage("初始化語音辨識失敗，您的瀏覽器可能不支援此功能。");
-                voiceButton.disabled = true; voiceButton.style.color = '#ccc'; voiceButton.title = "語音辨識初始化失敗"; userInput.placeholder = "請使用文字輸入";
-            }
-        } else { /* Fallback from v3 */
-             voiceButton.disabled = true; voiceButton.style.color = '#ccc'; voiceButton.title = "瀏覽器不支援語音輸入"; addBotMessage("抱歉，您的瀏覽器不支援語音輸入功能。請改用文字輸入。"); userInput.placeholder = "請輸入文字...";
-        }
-
-        // --- UI Helpers (Same as v3) ---
-        function toggleRecordingState() {
-            isRecording = !isRecording;
-            voiceButton.classList.toggle('recording', isRecording);
-            voiceButton.innerHTML = isRecording ? '◼' : '🎤';
-            voiceButton.title = isRecording ? "停止錄音" : "語音輸入";
-        }
-        function adjustTextareaHeight() {
-            userInput.style.height = 'auto';
-            let scrollHeight = userInput.scrollHeight;
-            const computedStyle = window.getComputedStyle(userInput);
-            const maxHeight = parseInt(computedStyle.maxHeight, 10);
-            const effectiveMaxHeight = isNaN(maxHeight) ? scrollHeight : maxHeight;
-            if (scrollHeight > effectiveMaxHeight) {
-                userInput.style.height = effectiveMaxHeight + 'px';
-                userInput.style.overflowY = 'auto';
-            } else {
-                const minHeight = parseInt(computedStyle.minHeight, 10) || 24;
-                userInput.style.height = Math.max(scrollHeight, minHeight) + 'px';
-                userInput.style.overflowY = 'hidden';
-            }
-        }
-
-        // --- Event Listeners (Same as v3) ---
-        voiceButton.addEventListener('click', () => {
-            if (!recognition || voiceButton.disabled) return;
-            if (isRecording) { if (recognition) recognition.stop(); }
-            else {
-                try {
-                    finalTranscript = ''; userInput.value = ''; adjustTextareaHeight();
-                    recognition.start(); toggleRecordingState();
-                } catch (err) { /* Error handling from v3 */
-                     console.error("無法啟動語音辨識 (catch):", err);
-                     if (err.name === 'InvalidStateError') { addBotMessage("語音辨識已在進行中。"); if (!isRecording) toggleRecordingState(); }
-                     else { addBotMessage(`啟動語音辨識失敗 (${err.name})，請檢查權限或稍後再試。`); if(isRecording) toggleRecordingState(); }
-                }
-            }
+    try {
+        const response = await fetch(BACKEND_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ symptoms: text }), // Send symptoms in request body
         });
-        sendButton.addEventListener('click', () => { const text = userInput.value.trim(); if (text) handleUserInput(text); });
-        userInput.addEventListener('input', () => { const hasText = userInput.value.trim().length > 0; sendButton.style.display = hasText ? 'flex' : 'none'; adjustTextareaHeight(); });
-        userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); const text = userInput.value.trim(); if (text) handleUserInput(text); } });
 
-        // --- Core Functions ---
-        function addMessage(text, sender) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
-            messageDiv.textContent = text;
-            chatContainer.appendChild(messageDiv);
-            chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
-        }
-        function addUserMessage(text) { addMessage(text, 'user'); }
-        function addBotMessage(text) { setTimeout(() => { addMessage(text, 'bot'); }, 150); }
+        // Remove the "Thinking..." message (optional)
+         if(thinkingMsg && thinkingMsg.parentNode) { // Check if element exists and is in DOM
+             thinkingMsg.remove();
+         }
 
-        // --- !!! MODIFIED handleUserInput Function !!! ---
-        function handleUserInput(text) {
-            if (!text) return; // Ignore empty input
 
-            const lastUserMessage = chatContainer.querySelector('.user-message:last-child');
-            if (!lastUserMessage || lastUserMessage.textContent !== text) {
-                 addUserMessage(text);
-            }
-
-            userInput.value = '';
-            adjustTextareaHeight();
-            sendButton.style.display = 'none';
-
-            // --- Prioritized Matching Logic ---
-            let bestPdfMatch = null;
-            let maxPdfScore = 0;
-            let bestGeminiMatch = null;
-            let maxGeminiScore = 0;
-
-            const lowerCaseText = text.toLowerCase();
-
-            // Iterate through KB to find best matches for each source type
-            knowledgeBase.forEach(item => {
-                let currentScore = 0;
-                item.keywords.forEach(keyword => {
-                    if (lowerCaseText.includes(keyword.toLowerCase())) {
-                        currentScore += keyword.length; // Weight by keyword length
-                    }
-                });
-
-                if (currentScore > 0) {
-                    if (item.source === 'PDF') {
-                        // Update best PDF match
-                        if (currentScore > maxPdfScore) {
-                            maxPdfScore = currentScore;
-                            bestPdfMatch = item;
-                        }
-                        // Basic tie-breaking: prefer shorter keyword list if scores are equal
-                        else if (currentScore === maxPdfScore && bestPdfMatch && item.keywords.length < bestPdfMatch.keywords.length) {
-                             bestPdfMatch = item;
-                        }
-                    } else if (item.source === 'Gemini') {
-                        // Update best Gemini match
-                        if (currentScore > maxGeminiScore) {
-                            maxGeminiScore = currentScore;
-                            bestGeminiMatch = item;
-                        }
-                         // Basic tie-breaking: prefer shorter keyword list if scores are equal
-                        else if (currentScore === maxGeminiScore && bestGeminiMatch && item.keywords.length < bestGeminiMatch.keywords.length) {
-                            bestGeminiMatch = item;
-                        }
-                    }
-                }
-            });
-
-            // --- Decision Making based on Priority ---
-            let finalRecommendation = null;
-            let sourceUsed = null;
-
-            // Priority 1: Use PDF match if found
-            if (bestPdfMatch && maxPdfScore > 0) {
-                finalRecommendation = bestPdfMatch;
-                sourceUsed = '來源: PDF 文件';
-            }
-            // Priority 2: Use Gemini match if NO PDF match found
-            else if (bestGeminiMatch && maxGeminiScore > 0) {
-                finalRecommendation = bestGeminiMatch;
-                sourceUsed = '來源: AI 知識庫';
-            }
-
-            // --- Provide Response ---
-            setTimeout(() => {
-                if (finalRecommendation) {
-                    addBotMessage(`根據您的描述「${text}」，${sourceUsed}建議您可以考慮掛「${finalRecommendation.department}」。提醒您，這僅為初步建議，實際情況請諮詢專業醫師。`);
-                } else {
-                    addBotMessage("抱歉，我暫時無法從您的描述中判斷適合的科別。您可以試著描述更具體的症狀、部位或感受，例如：「右下腹劇痛已經半天了」或「喉嚨痛而且有點發燒」。");
-                }
-            }, 300 + Math.random() * 300);
+        if (!response.ok) {
+            // Try to get error details from backend response body
+            let errorData = { error: `請求失敗，狀態碼: ${response.status}`};
+            try {
+                errorData = await response.json();
+            } catch (e) { /* Ignore if response is not JSON */ }
+             console.error("Backend request failed:", response.status, errorData);
+            addBotMessage(`抱歉，與 AI 伺服器溝通時發生錯誤 (<span class="math-inline">\{response\.status\}\)。</span>{errorData.error ? `詳情: ${errorData.error}` : ''}`);
+            return; // Stop processing on error
         }
 
-        // Initial setup
-        userInput.placeholder = "請點擊 🎤 或輸入文字...";
-        adjustTextareaHeight();
+        const data = await response.json();
 
-    </script>
+        // Display the recommendation received from the backend
+        if (data.recommendation) {
+             addBotMessage(data.recommendation); // Display the response crafted by the backend
+        } else {
+             addBotMessage("抱歉，AI 未能提供有效的建議。");
+        }
 
-</body>
-</html>
+    } catch (error) {
+         // Remove the "Thinking..." message on network error too (optional)
+         if(thinkingMsg && thinkingMsg.parentNode) {
+             thinkingMsg.remove();
+         }
+
+        console.error('Error calling backend API:', error);
+        addBotMessage("抱歉，無法連接到 AI 伺服器。請檢查網路連線或稍後再試。");
+    }
+}
+
+ // Make addBotMessage return the element so we can remove "Thinking..."
+ function addBotMessage(text) {
+     const messageDiv = document.createElement('div');
+     messageDiv.classList.add('message', 'bot-message');
+     messageDiv.textContent = text;
+     chatContainer.appendChild(messageDiv);
+     chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
+     return messageDiv; // Return the created element
+ }
