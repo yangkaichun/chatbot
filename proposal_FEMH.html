@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亞東醫院智能語音文字客服系統規劃計畫書</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        .page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a56db;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .subsection-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2563eb;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+        .chart-container {
+            width: 100%;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .chart {
+            max-width: 100%;
+            height: auto;
+        }
+        .timeline {
+            margin: 30px 0;
+        }
+        .timeline-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 3px solid #3b82f6;
+            background-color: #f3f4f6;
+            border-radius: 0 5px 5px 0;
+        }
+        .table-container {
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        th {
+            background-color: #f9fafb;
+            font-weight: 600;
+        }
+        .mockup-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .mockup-image {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .feature-card {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f3f4f6;
+            border-radius: 8px;
+        }
+        .cover-page {
+            text-align: center;
+            padding: 100px 0;
+        }
+        .cover-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1a56db;
+        }
+        .cover-subtitle {
+            font-size: 20px;
+            color: #6b7280;
+            margin-bottom: 40px;
+        }
+        .cover-date {
+            font-size: 16px;
+            color: #6b7280;
+        }
+        .note {
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .important {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .success {
+            background-color: #ecfdf5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .toc-container {
+            background-color: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .toc-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1a56db;
+        }
+        .toc-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .toc-list li {
+            margin-bottom: 10px;
+        }
+        .toc-list li a {
+            text-decoration: none;
+            color: #3b82f6;
+        }
+        .toc-list li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="page-container">
+        <!-- 封面頁 -->
+        <div class="cover-page section">
+            <div class="cover-title">亞東醫院智能語音文字客服系統</div>
+            <div class="cover-subtitle">規劃計畫書</div>
+            <img src="https://i.imgur.com/dG2Rwf3.png" alt="系統架構圖" class="mx-auto w-3/4">
+            <div class="cover-date mt-10">
+                <p>提交日期：2023年11月</p>
+            </div>
+        </div>
+
+        <!-- 目錄 -->
+        <div class="toc-container section">
+            <div class="toc-title">目錄</div>
+            <ul class="toc-list">
+                <li><a href="#前言">1. 前言</a></li>
+                <li><a href="#系統架構">2. 系統架構</a></li>
+                <li><a href="#模擬畫面">3. 模擬畫面</a></li>
+                <li><a href="#系統架構關聯圖">4. 系統架構關聯圖</a></li>
+                <li><a href="#模擬後臺介面">5. 模擬後臺介面</a></li>
+                <li><a href="#AI介面">6. AI介面</a></li>
+                <li><a href="#Azure部屬方式">7. Azure部屬方式</a></li>
+                <li><a href="#分析報表">8. 分析報表</a></li>
+                <li><a href="#知識庫來源">9. 知識庫來源及彈性調整後台示意圖</a></li>
+                <li><a href="#IVR整合">10. IVR整合方案</a></li>
+                <li><a href="#多租戶架構">11. 多租戶架構設計</a></li>
+                <li><a href="#需提供資料">12. 亞東醫院需提供的資料清單</a></li>
+                <li><a href="#時程規劃">13. 時程規劃</a></li>
+                <li><a href="#預算估計">14. 預算估計</a></li>
+                <li><a href="#風險評估">15. 風險評估與應對策略</a></li>
+                <li><a href="#結論">16. 結論與建議</a></li>
+            </ul>
+        </div>
+
+        <!-- 前言 -->
+        <div id="前言" class="section">
+            <h2 class="section-title">1. 前言</h2>
+            <p>隨著人工智能技術的飛速發展，醫療服務領域正經歷著數字化轉型的浪潮。亞東醫院作為台灣領先的醫療機構，致力於將創新技術應用於提升患者體驗和醫療服務效率。本計畫旨在設計並實施一套整合語音與文字互動的智能客服系統，為患者提供便捷、精準的醫療諮詢和掛號服務。</p>
+            
+            <h3 class="subsection-title">1.1 專案背景</h3>
+            <p>當前醫院客服系統面臨多項挑戰：電話諮詢高峰期等待時間長、常規問題重複解答消耗人力資源、掛號選科需要專業指導等。智能語音文字客服系統將能有效解決這些問題，通過AI技術提供全天候、高效率、專業化的醫療諮詢和掛號推薦服務。</p>
+            
+            <h3 class="subsection-title">1.2 專案目標</h3>
+            <p>本專案旨在打造一個集語音與文字互動於一體的亞東醫院智能客服系統，實現以下目標：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li>建立基於亞東醫院專業知識的AI智能應答系統</li>
+                <li>整合醫院官方資訊與ChatGPT，提供準確專業的諮詢服務</li>
+                <li>根據患者描述的症狀，推薦合適的掛號科室和醫師</li>
+                <li>與亞東醫院現有總機系統(IVR)無縫整合</li>
+                <li>設計彈性化的後台管理，便於知識更新和系統優化</li>
+                <li>實現系統模組化設計，支持快速部署到其他醫院</li>
+            </ul>
+            
+            <h3 class="subsection-title">1.3 專案價值</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="feature-card">
+                    <h4 class="font-semibold text-lg">患者價值</h4>
+                    <ul class="list-disc pl-6">
+                        <li>提供24/7不間斷的醫療諮詢服務</li>
+                        <li>減少掛號等待時間與選科困惑</li>
+                        <li>多渠道交互方式，提升用戶體驗</li>
+                        <li>專業化的症狀分析與掛號建議</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4 class="font-semibold text-lg">醫院價值</h4>
+                    <ul class="list-disc pl-6">
+                        <li>釋放人工客服資源，專注處理複雜問題</li>
+                        <li>優化科室資源分配，提高就診精準度</li>
+                        <li>收集患者諮詢數據，優化醫院服務</li>
+                        <li>提升醫院品牌形象與技術先進性</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="note">
+                <p class="font-semibold">計畫特色：</p>
+                <p>本系統除具備基本的AI客服功能外，特別增強了三大核心能力：<br>
+                1. 專業的醫療症狀分析與科室推薦<br>
+                2. 與醫院總機IVR系統的深度整合<br>
+                3. 多租戶架構設計，支持跨醫院快速部署</p>
+            </div>
+        </div>
+
+        <!-- 系統架構 -->
+        <div id="系統架構" class="section">
+            <h2 class="section-title">2. 系統架構</h2>
+            <p>亞東醫院智能客服系統採用模塊化設計，結合前沿AI技術與醫療專業知識，構建靈活且可擴展的服務平台。</p>
+            
+            <h3 class="subsection-title">2.1 整體架構概述</h3>
+            <div class="chart-container">
+                <img src="https://i.imgur.com/dG2Rwf3.png" alt="系統整體架構圖" class="chart">
+                <p class="text-center text-sm text-gray-600 mt-2">圖2.1 亞東醫院智能客服系統整體架構</p>
+            </div>
+            
+            <h3 class="subsection-title">2.2 核心組件</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div class="feature-card">
+                    <h4 class="font-semibold">前端界面</h4>
+                    <p>響應式Web應用，支援手機瀏覽器訪問，提供語音與文字輸入功能，展示掛號推薦結果和醫師信息。</p>
+                </div>
+                <div class="feature-card">
+                    <h4 class="font-semibold">對話引擎</h4>
+                    <p>基於Dify平台構建的NLP處理核心，支持多輪對話與上下文理解，整合ChatGPT提供專業回答。</p>
+                </div>
+                <div class="feature-card">
+                    <h4 class="font-semibold">知識庫管理</h4>
+                    <p>存儲和管理醫院資訊和診斷指南，支持多種來源數據整合與更新維護。</p>
+                </div>
+                <div class="feature-card">
+                    <h4 class="font-semibold">掛號推薦系統</h4>
+                    <p>基於症狀與疾病關聯模型，提供科室和醫師建議，並支持醫師排序規則設定。</p>
+                </div>
+                <div class="feature-card">
+                    <h4 class="font-semibold">API整合層</h4>
+                    <p>連接醫院掛號系統及其他外部服務，確保數據安全與高效傳輸。</p>
+                </div>
+                <div class="feature-card">
+                    <h4 class="font-semibold">後台管理系統</h4>
+                    <p>供管理人員更新知識庫，設定推薦規則，監控系統運行狀態與效能。</p>
+                </div>
+            </div>
+            
+            <h3 class="subsection-title">2.3 系統技術堆棧</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>系統層級</th>
+                            <th>技術選擇</th>
+                            <th>說明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>前端框架</td>
+                            <td>Vue.js/React</td>
+                            <td>構建響應式用戶界面，支持Web與移動端訪問</td>
+                        </tr>
+                        <tr>
+                            <td>AI對話平台</td>
+                            <td>Dify</td>
+                            <td>提供對話管理與知識庫集成能力</td>
+                        </tr>
+                        <tr>
+                            <td>語音處理</td>
+                            <td>Azure Cognitive Services</td>
+                            <td>提供語音識別與合成功能</td>
+                        </tr>
+                        <tr>
+                            <td>數據存儲</td>
+                            <td>Azure SQL Database & Cosmos DB</td>
+                            <td>管理結構化數據與非結構化知識內容</td>
+                        </tr>
+                        <tr>
+                            <td>API管理</td>
+                            <td>Azure API Management</td>
+                            <td>統一管理內部與外部API調用</td>
+                        </tr>
+                        <tr>
+                            <td>部署環境</td>
+                            <td>Azure App Service</td>
+                            <td>提供可靠的Web應用託管服務</td>
+                        </tr>
+                        <tr>
+                            <td>監控與分析</td>
+                            <td>Azure Monitor & Application Insights</td>
+                            <td>監控系統運行狀態與用戶行為分析</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 模擬畫面 -->
+        <div id="模擬畫面" class="section">
+            <h2 class="section-title">3. 模擬畫面</h2>
+            <p>以下展示系統主要界面的模擬設計，包括用戶交互界面和流程示意。</p>
+            
+            <h3 class="subsection-title">3.1 用戶主界面</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/AXLuBpt.png" alt="用戶主界面模擬圖" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖3.1 智能客服系統用戶主界面設計</p>
+            </div>
+            <p class="mt-4">主界面設計特點：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li>簡潔直觀的聊天界面，符合用戶使用習慣</li>
+                <li>顯眼的語音輸入按鈕，方便用戶切換輸入方式</li>
+                <li>清晰的導航選項，幫助用戶快速找到所需服務</li>
+                <li>整合亞東醫院品牌元素，保持視覺一致性</li>
+            </ul>
+            
+            <h3 class="subsection-title">3.2 掛號推薦流程</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/Y9vRtlk.png" alt="掛號推薦流程模擬圖" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖3.2 基於症狀的掛號推薦流程</p>
+            </div>
+            <p class="mt-4">掛號推薦流程說明：</p>
+            <ol class="list-decimal pl-6 mb-4">
+                <li>用戶描述症狀（通過語音或文字）</li>
+                <li>系統分析症狀，匹配可能的疾病</li>
+                <li>推薦適合的科室，並說明推薦理由</li>
+                <li>展示推薦科室的可用醫師名單</li>
+                <li>用戶選擇醫師後顯示可預約時段</li>
+                <li>確認預約信息，完成掛號流程</li>
+            </ol>
+            
+            <h3 class="subsection-title">3.3 醫療諮詢示例</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/Z2CdKj3.png" alt="醫療諮詢對話示例" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖3.3 醫療諮詢對話示例</p>
+            </div>
+            <div class="success mt-4">
+                <h4 class="font-semibold">對話設計原則</h4>
+                <p>系統回答遵循以下原則：</p>
+                <ul class="list-disc pl-6">
+                    <li><strong>專業性</strong>：基於亞東醫院專業知識庫，提供準確信息</li>
+                    <li><strong>清晰性</strong>：避免醫學專業術語過多，語言通俗易懂</li>
+                    <li><strong>溫暖性</strong>：使用親切語氣，建立信任關係</li>
+                    <li><strong>引導性</strong>：適時引導用戶提供更多相關信息，增強互動</li>
+                    <li><strong>安全性</strong>：對涉及嚴重症狀時，建議及時就醫，避免延誤治療</li>
+                </ul>
+            </div>
+            
+            <h3 class="subsection-title">3.4 從IVR轉接流程</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/TcLpAY3.png" alt="IVR轉接流程" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖3.4 從總機IVR轉接至AI客服流程</p>
+            </div>
+        </div>
+
+        <!-- 系統架構關聯圖 -->
+        <div id="系統架構關聯圖" class="section">
+            <h2 class="section-title">4. 系統架構關聯圖</h2>
+            <p>以下展示系統各組件之間的數據流與交互關係，說明系統如何協同工作。</p>
+            
+            <h3 class="subsection-title">4.1 數據流程圖</h3>
+            <div class="chart-container">
+                <img src="https://i.imgur.com/nXtpEzL.png" alt="系統數據流程圖" class="chart">
+                <p class="text-center text-sm text-gray-600 mt-2">圖4.1 智能客服系統數據流程圖</p>
+            </div>
+            <p class="mt-4">數據流程說明：</p>
+            <ol class="list-decimal pl-6 mb-4">
+                <li>用戶通過網頁/APP/IVR提交文字或語音輸入</li>
+                <li>語音輸入經Azure Cognitive Services轉換為文字</li>
+                <li>Dify平台的NLP引擎處理用戶輸入，理解意圖</li>
+                <li>系統根據意圖分類，路由至相應處理模塊（醫療諮詢/掛號推薦/其他服務）</li>
+                <li>處理模塊查詢知識庫和/或外部API獲取所需數據</li>
+                <li>生成回應，經過安全審核後發送給用戶</li>
+                <li>系統記錄互動數據，用於持續優化服務質量</li>
+            </ol>
+            
+            <h3 class="subsection-title">4.2 組件關係圖</h3>
+            <div class="chart-container">
+                <img src="https://i.imgur.com/E3dV87Y.png" alt="系統組件關係圖" class="chart">
+                <p class="text-center text-sm text-gray-600 mt-2">圖4.2 系統組件關係圖</p>
+            </div>
+            
+            <h3 class="subsection-title">4.3 掛號推薦邏輯流程</h3>
+            <div class="chart-container">
+                <img src="https://i.imgur.com/8Wfclk5.png" alt="掛號推薦邏輯流程" class="chart">
+                <p class="text-center text-sm text-gray-600 mt-2">圖4.3 基於症狀的科室推薦邏輯流程</p>
+            </div>
+            <div class="note mt-4">
+                <p><strong>科室推薦邏輯說明</strong></p>
+                <p>推薦系統基於多維度匹配原則，考量以下因素：</p>
+                <ol class="list-decimal pl-6">
+                    <li>主症狀與疾病關聯強度</li>
+                    <li>輔助症狀匹配程度</li>
+                    <li>症狀持續時間與嚴重程度</li>
+                    <li>人口統計特徵（年齡、性別等）相關性</li>
+                    <li>歷史推薦成功率反饋</li>
+                </ol>
+                <p>系統將綜合上述因素計算推薦分數，並按分數高低排序向用戶推薦最適合的科室。</p>
+            </div>
+        </div>
+
+        <!-- 模擬後臺介面 -->
+        <div id="模擬後臺介面" class="section">
+            <h2 class="section-title">5. 模擬後臺介面</h2>
+            <p>後台管理系統提供完整的知識庫管理、對話配置和系統監控功能，支持多租戶管理。</p>
+            
+            <h3 class="subsection-title">5.1 後台主控台</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/1zXsD1V.png" alt="後台主控台" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖5.1 後台管理主控台</p>
+            </div>
+            <p class="mt-4">主控台功能區塊：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>系統概況</strong>：展示關鍵績效指標和系統運行狀態</li>
+                <li><strong>即時監控</strong>：顯示當前活躍用戶和系統負載情況</li>
+                <li><strong>近期活動</strong>：記錄最近的管理操作和系統事件</li>
+                <li><strong>性能指標</strong>：展示回應時間、用戶滿意度等關鍵指標</li>
+            </ul>
+            
+            <h3 class="subsection-title">5.2 知識庫管理介面</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/wLrJovb.png" alt="知識庫管理介面" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖5.2 知識庫管理介面</p>
+            </div>
+            <p class="mt-4">知識庫管理功能：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>內容瀏覽</strong>：分類查看現有知識條目</li>
+                <li><strong>批量導入</strong>：支持Excel、PDF等多種格式批量導入</li>
+                <li><strong>內容編輯</strong>：修改和優化知識條目內容</li>
+                <li><strong>知識審核</strong>：設置審核流程，確保內容專業性</li>
+                <li><strong>版本控制</strong>：管理知識庫更新歷史，支持回滾操作</li>
+                <li><strong>效果分析</strong>：追蹤知識條目使用率和回答滿意度</li>
+            </ul>
+            
+            <h3 class="subsection-title">5.3 掛號規則配置</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/Y9vRtlk.png" alt="掛號規則配置" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖5.3 掛號推薦規則配置界面</p>
+            </div>
+            <p class="mt-4">規則配置功能：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>症狀-科室映射</strong>：設置症狀與科室的對應關係</li>
+                <li><strong>醫師排序規則</strong>：設定醫師推薦的排序邏輯</li>
+                <li><strong>推薦理由模板</strong>：編輯不同情況下的推薦說明文案</li>
+                <li><strong>特殊情況處理</strong>：設置需要人工干預的複雜症狀規則</li>
+            </ul>
+            
+            <h3 class="subsection-title">5.4 多租戶管理界面</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/8fb730d.png" alt="多租戶管理界面" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖5.4 多租戶管理與快速部署界面</p>
+            </div>
+            <p class="mt-4">多租戶管理功能：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>租戶概覽</strong>：顯示所有醫院租戶及其使用情況</li>
+                <li><strong>租戶創建</strong>：快速創建新醫院實例</li>
+                <li><strong>模板管理</strong>：管理可複用的配置模板</li>
+                <li><strong>共享資源</strong>：設置租戶間可共享的知識庫內容</li>
+                <li><strong>部署工具</strong>：提供新租戶的一鍵部署功能</li>
+            </ul>
+        </div>
+
+        <!-- AI介面 -->
+        <div id="AI介面" class="section">
+            <h2 class="section-title">6. AI介面</h2>
+            <p>AI介面是系統的核心組件，基於Dify平台構建，提供自然語言理解和生成能力。</p>
+            
+            <h3 class="subsection-title">6.1 Dify平台配置</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/nLQQb4N.png" alt="Dify平台配置" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖6.1 Dify平台應用配置界面</p>
+            </div>
+            <p class="mt-4">Dify平台主要配置：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>應用類型</strong>：對話式應用，支持多輪對話</li>
+                <li><strong>基礎模型</strong>：選擇適合醫療場景的大型語言模型</li>
+                <li><strong>提示詞模板</strong>：針對醫療諮詢和掛號推薦優化的專業提示詞</li>
+                <li><strong>知識庫設置</strong>：連接亞東醫院專業知識庫</li>
+                <li><strong>API配置</strong>：設置與外部系統的連接參數</li>
+            </ul>
+            
+            <h3 class="subsection-title">6.2 對話流程設計</h3>
+            <div class="chart-container">
+                <img src="https://i.imgur.com/Z2CdKj3.png" alt="對話流程設計" class="chart">
+                <p class="text-center text-sm text-gray-600 mt-2">圖6.2 AI對話流程設計</p>
+            </div>
+            <p class="mt-4">對話流程主要階段：</p>
+            <ol class="list-decimal pl-6 mb-4">
+                <li><strong>意圖識別</strong>：分析用戶輸入，確定主要意圖</li>
+                <li><strong>信息提取</strong>：從用戶描述中識別關鍵信息（症狀、時間等）</li>
+                <li><strong>知識檢索</strong>：從知識庫中檢索相關信息</li>
+                <li><strong>回應生成</strong>：結合檢索結果和上下文，生成自然、專業的回應</li>
+                <li><strong>後續引導</strong>：根據對話進展，提供相應的引導和建議</li>
+            </ol>
+            
+            <h3 class="subsection-title">6.3 醫療專業性保障機制</h3>
+            <div class="important">
+                <p><strong>確保醫療專業性的機制</strong></p>
+                <ul class="list-disc pl-6">
+                    <li><strong>知識來源監控</strong>：所有回答基於亞東醫院提供的專業醫療知識</li>
+                    <li><strong>專業審核流程</strong>：知識內容經醫療專家審核確認</li>
+                    <li><strong>答案安全閾值</strong>：設置置信度閾值，低於閾值的問題引導至人工</li>
+                    <li><strong>醫療免責聲明</strong>：清晰說明AI回答不替代專業醫療診斷</li>
+                    <li><strong>危急情況識別</strong>：對嚴重症狀的描述，系統會建議立即就醫</li>
+                </ul>
+            </div>
+            
+            <h3 class="subsection-title">6.4 語音處理能力</h3>
+            <p>系統整合Azure Cognitive Services提供高質量的語音處理功能：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>語音識別(STT)</strong>：支持繁體中文及多種口音和方言識別</li>
+                <li><strong>語音合成(TTS)</strong>：自然流暢的語音輸出，支持調整語速和音調</li>
+                <li><strong>醫療術語優化</strong>：針對醫療專業術語的特殊處理</li>
+                <li><strong>噪音過濾</strong>：優化嘈雜環境下的語音識別率</li>
+                <li><strong>多平台支持</strong>：在Web、移動設備和電話系統上一致的語音體驗</li>
+            </ul>
+        </div>
+
+        <!-- Azure部屬方式 -->
+        <div id="Azure部屬方式" class="section">
+            <h2 class="section-title">7. Azure部屬方式</h2>
+            <p>系統將部署在亞東醫院的Azure環境中，利用Azure提供的各種服務確保系統的可靠性、安全性和可擴展性。</p>
+            
+            <h3 class="subsection-title">7.1 部署架構圖</h3>
+            <div class="chart-container">
+                <img src="https://i.imgur.com/8fb730d.png" alt="Azure部署架構圖" class="chart">
+                <p class="text-center text-sm text-gray-600 mt-2">圖7.1 Azure部署架構圖</p>
+            </div>
+            
+            <h3 class="subsection-title">7.2 核心Azure服務組件</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Azure服務</th>
+                            <th>用途</th>
+                            <th>配置參考</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Azure App Service</td>
+                            <td>部署Web應用，提供前端與API服務</td>
+                            <td>P2V2 (2核心, 7G RAM)，自動擴展配置</td>
+                        </tr>
+                        <tr>
+                            <td>Azure Functions</td>
+                            <td>處理無服務器邏輯，如數據處理、異步任務</td>
+                            <td>消費計劃，按需擴展</td>
+                        </tr>
+                        <tr>
+                            <td>Azure SQL Database</td>
+                            <td>存儲結構化數據，如用戶記錄、系統配置</td>
+                            <td>標準S1 (20 DTU, 250GB)，按需彈性池</td>
+                        </tr>
+                        <tr>
+                            <td>Azure Cosmos DB</td>
+                            <td>存儲非結構化知識庫內容</td>
+                            <td>按需吞吐量模式</td>
+                        </tr>
+                        <tr>
+                            <td>Azure Cognitive Services</td>
+                            <td>提供語音識別、合成和文本分析能力</td>
+                            <td>標準方案，按使用量計費</td>
+                        </tr>
+                        <tr>
+                            <td>Azure API Management</td>
+                            <td>管理API，控制流量和監控使用情況</td>
+                            <td>標準方案</td>
+                        </tr>
+                        <tr>
+                            <td>Azure Active Directory</td>
+                            <td>提供身份驗證和授權服務</td>
+                            <td>P1 級別</td>
+                        </tr>
+                        <tr>
+                            <td>Azure Monitor & App Insights</td>
+                            <td>監控系統性能和用戶行為</td>
+                            <td>基本方案</td>
+                        </tr>
+                        <tr>
+                            <td>Azure Storage Account</td>
+                            <td>存儲日誌、媒體文件和備份</td>
+                            <td>通用 V2，LRS冗餘</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3 class="subsection-title">7.3 系統安全策略</h3>
+            <div class="feature-card">
+                <p>系統實施以下安全措施：</p>
+                <ul class="list-disc pl-6">
+                    <li><strong>網絡安全</strong>：使用Azure VNet進行網絡隔離，應用網關提供WAF保護</li>
+                    <li><strong>數據安全</strong>：靜態和傳輸中的數據加密，敏感信息脫敏處理</li>
+                    <li><strong>身份驗證</strong>：Azure AD集成，支持單點登錄和多因素認證</li>
+                    <li><strong>授權控制</strong>：基於角色的細粒度權限控制</li>
+                    <li><strong>安全監控</strong>：Azure Security Center持續監控，入侵檢測</li>
+                    <li><strong>合規保障</strong>：符合醫療行業相關數據安全法規</li>
+                </ul>
+            </div>
+            
+            <h3 class="subsection-title">7.4 擴展性與可用性設計</h3>
+            <p>系統設計支持根據需求自動擴展：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>水平擴展</strong>：App Service可根據負載自動擴展實例數量</li>
+                <li><strong>垂直擴展</strong>：可根據需要調整計算資源規格</li>
+                <li><strong>區域冗餘</strong>：重要數據採用區域冗餘存儲</li>
+                <li><strong>備份策略</strong>：定期數據備份與災難恢復計劃</li>
+                <li><strong>高可用性</strong>：通過負載均衡和多實例部署確保可用性</li>
+            </ul>
+            
+            <h3 class="subsection-title">7.5 Dify平台部署</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/TcLpAY3.png" alt="Dify平台部署" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖7.5 Dify平台在Azure上的部署配置</p>
+            </div>
+            <p class="mt-4">Dify平台在Azure上的部署特點：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li>使用Azure容器服務部署Dify平台核心組件</li>
+                <li>利用Azure Managed Identity提供無需憑證的安全連接</li>
+                <li>Dify數據庫採用Azure Database for PostgreSQL</li>
+                <li>向量存儲使用Azure Cache for Redis或專用向量數據庫</li>
+                <li>文件存儲使用Azure Blob Storage</li>
+            </ul>
+        </div>
+
+        <!-- 分析報表 -->
+        <div id="分析報表" class="section">
+            <h2 class="section-title">8. 分析報表</h2>
+            <p>系統提供全面的分析報表功能，幫助醫院管理者了解系統使用情況、用戶行為和服務質量。</p>
+            
+            <h3 class="subsection-title">8.1 用戶互動分析</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/wLrJovb.png" alt="用戶互動分析" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖8.1 用戶互動分析儀表板</p>
+            </div>
+            <p class="mt-4">用戶互動報表內容：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>訪問統計</strong>：用戶訪問量、峰值時段、使用時長</li>
+                <li><strong>互動分布</strong>：各功能模塊使用比例</li>
+                <li><strong>設備分析</strong>：不同設備類型和操作系統的使用情況</li>
+                <li><strong>用戶留存</strong>：回訪率和使用頻率分析</li>
+                <li><strong>互動路徑</strong>：用戶在系統中的主要導航路徑</li>
+            </ul>
+            
+            <h3 class="subsection-title">8.2 掛號推薦分析</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/Z2CdKj3.png" alt="掛號推薦分析" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖8.2 掛號推薦效果分析報表</p>
+            </div>
+            <p class="mt-4">掛號推薦報表內容：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>科室推薦分布</strong>：各科室被推薦次數統計</li>
+                <li><strong>推薦接受率</strong>：用戶接受推薦結果的比例</li>
+                <li><strong>常見症狀分析</strong>：用戶描述的高頻症狀統計</li>
+                <li><strong>推薦準確度評估</strong>：基於用戶反饋的準確度分析</li>
+                <li><strong>掛號轉化率</strong>：從咨詢到完成掛號的轉化率</li>
+            </ul>
+            
+            <h3 class="subsection-title">8.3 系統性能報表</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/1zXsD1V.png" alt="系統性能報表" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖8.3 系統性能監控報表</p>
+            </div>
+            <p class="mt-4">系統性能報表內容：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>回應時間</strong>：各組件的處理時間統計</li>
+                <li><strong>系統負載</strong>：CPU、內存使用率和網絡流量</li>
+                <li><strong>API調用統計</strong>：各API服務的調用量和性能</li>
+                <li><strong>錯誤率監控</strong>：系統錯誤和異常情況統計</li>
+                <li><strong>資源使用趨勢</strong>：計算和存儲資源使用趨勢分析</li>
+            </ul>
+            
+            <h3 class="subsection-title">8.4 醫療咨詢內容分析</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/8fb730d.png" alt="醫療咨詢內容分析" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖8.4 醫療咨詢內容分析報表</p>
+            </div>
+            <p class="mt-4">咨詢內容分析報表：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>熱門話題</strong>：用戶咨詢的高頻主題</li>
+                <li><strong>季節性趨勢</strong>：不同時間段的咨詢主題變化</li>
+                <li><strong>知識庫命中率</strong>：現有知識庫對用戶問題的覆蓋率</li>
+                <li><strong>未解答問題</strong>：系統無法有效回答的問題分類</li>
+                <li><strong>滿意度分析</strong>：用戶對不同類型咨詢的滿意度評價</li>
+            </ul>
+            
+            <div class="success mt-6">
+                <h4 class="font-semibold">報表價值與應用</h4>
+                <p>這些分析報表不僅提供系統運行情況的可視化，更能幫助醫院：</p>
+                <ul class="list-disc pl-6">
+                    <li><strong>優化資源分配</strong>：根據掛號趨勢調整門診資源</li>
+                    <li><strong>提升服務質量</strong>：針對常見問題優化回答內容</li>
+                    <li><strong>預測服務需求</strong>：分析季節性趨勢，提前做好準備</li>
+                    <li><strong>系統持續優化</strong>：發現並解決系統短板和性能瓶頸</li>
+                    <li><strong>醫院決策支持</strong>：為醫院管理層提供數據支持</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 知識庫來源及彈性調整後台示意圖 -->
+        <div id="知識庫來源" class="section">
+            <h2 class="section-title">9. 知識庫來源及彈性調整後台示意圖</h2>
+            <p>系統知識庫整合多種來源的醫療信息，並通過彈性的後台管理實現快速更新和優化。</p>
+            
+            <h3 class="subsection-title">9.1 知識庫來源架構</h3>
+            <div class="chart-container">
+                <img src="https://i.imgur.com/E3dV87Y.png" alt="知識庫來源架構" class="chart">
+                <p class="text-center text-sm text-gray-600 mt-2">圖9.1 多層級知識庫架構</p>
+            </div>
+            <p class="mt-4">知識庫分層結構：</p>
+            <ol class="list-decimal pl-6 mb-4">
+                <li><strong>全域醫療知識層</strong>：包含通用醫療術語、標準症狀-疾病關聯</li>
+                <li><strong>租戶專屬知識層</strong>：亞東醫院特有的科室設置、醫療服務和規定</li>
+                <li><strong>動態更新知識層</strong>：醫師排班、特殊門診通知等需要頻繁更新的內容</li>
+            </ol>
+            
+            <h3 class="subsection-title">9.2 知識內容來源</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="feature-card">
+                    <h4 class="font-semibold">內部知識來源</h4>
+                    <ul class="list-disc pl-6">
+                        <li>亞東醫院官方網站內容</li>
+                        <li>醫院提供的文檔(如症狀與科室對應表)</li>
+                        <li>醫師專業知識庫(如診療指南)</li>
+                        <li>歷史諮詢記錄與常見問題</li>
+                        <li>醫院制度與服務流程說明</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4 class="font-semibold">外部知識來源</h4>
+                    <ul class="list-disc pl-6">
+                        <li>經審核的公開醫學資源</li>
+                        <li>相關醫療法規與政策</li>
+                        <li>公共衛生機構發布的健康資訊</li>
+                        <li>ChatGPT提供的補充資訊(經專業審核)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 class="subsection-title">9.3 知識庫管理介面</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/wLrJovb.png" alt="知識庫管理介面" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖9.3 知識庫管理與編輯介面</p>
+            </div>
+            <p class="mt-4">知識庫編輯功能：</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>結構化編輯器</strong>：提供專用編輯界面，確保知識條目格式一致</li>
+                <li><strong>批量導入工具</strong>：支持Excel、Word、PDF等格式批量導入</li>
+                <li><strong>爬蟲配置</strong>：設置自動爬取亞東醫院網站內容的規則</li>
+                <li><strong>內容標籤</strong>：多維度標籤系統，便於組織和檢索知識</li>
+                <li><strong>審核工作流</strong>：內容更新的多級審核流程</li>
+                <li><strong>版本控制</strong>：知識庫的歷史版本管理</li>
+            </ul>
+            
+            <h3 class="subsection-title">9.4 知識庫更新流程</h3>
+            <div class="chart-container">
+                <img src="https://i.imgur.com/8fb730d.png" alt="知識庫更新流程" class="chart">
+                <p class="text-center text-sm text-gray-600 mt-2">圖9.4 知識庫更新與審核流程</p>
+            </div>
+            <p class="mt-4">更新流程說明：</p>
+            <ol class="list-decimal pl-6 mb-4">
+                <li><strong>內容準備</strong>：編輯或導入新的知識內容</li>
+                <li><strong>初步審核</strong>：系統自動檢查格式和一致性</li>
+                <li><strong>專業審核</strong>：醫療專家確認內容的專業準確性</li>
+                <li><strong>發布審批</strong>：管理員最終確認並發布更新</li>
+                <li><strong>效果監控</strong>：追蹤更新後的知識使用情況和滿意度</li>
+            </ol>
+            
+            <div class="note">
+                <p><strong>知識庫優化機制</strong></p>
+                <p>系統實施持續優化機制，自動發現知識庫中的不足：</p>
+                <ul class="list-disc pl-6">
+                    <li><strong>未覆蓋問題識別</strong>：記錄系統無法回答的問題類型</li>
+                    <li><strong>低滿意度回答分析</strong>：識別用戶評價較低的回答</li>
+                    <li><strong>知識矛盾檢測</strong>：自動檢測知識庫中可能存在的矛盾</li>
+                    <li><strong>熱點話題追蹤</strong>：識別新興的熱門咨詢主題</li>
+                    <li><strong>改進建議生成</strong>：基於分析結果自動生成知識庫改進建議</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- IVR整合方案 -->
+        <div id="IVR整合" class="section">
+            <h2 class="section-title">10. IVR整合方案</h2>
+            <p>系統與亞東醫院現有總機IVR系統深度整合，實現從語音電話到智能客服的無縫過渡。</p>
+            
+            <h3 class="subsection-title">10.1 IVR整合架構</h3>
+            <div class="chart-container">
+                <img src="https://i.imgur.com/8Wfclk5.png" alt="IVR整合架構" class="chart">
+                <p class="text-center text-sm text-gray-600 mt-2">圖10.1 IVR系統與AI客服整合架構</p>
+            </div>
+            
+            <h3 class="subsection-title">10.2 主要集成功能</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="feature-card">
+                    <h4 class="font-semibold">通話轉接功能</h4>
+                    <ul class="list-disc pl-6">
+                        <li>從IVR自動轉至AI客服處理</li>
+                        <li>從AI客服轉至人工座席</li>
+                        <li>轉接過程中保留上下文信息</li>
+                        <li>智能判斷適合AI處理的問題類型</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4 class="font-semibold">多模態交互</h4>
+                    <ul class="list-disc pl-6">
+                        <li>語音電話與網頁/APP客服間切換</li>
+                        <li>通過SMS發送連結實現渠道切換</li>
+                        <li>不同渠道間的對話歷史共享</li>
+                        <li>統一的用戶識別與認證</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 class="subsection-title">10.3 IVR交互設計</h3>
+            <div class="mockup-container">
+                <img src="https://i.imgur.com/TcLpAY3.png" alt="IVR交互設計" class="mockup-image">
+                <p class="text-center text-sm text-gray-600 mt-2">圖10.3 IVR語音交互設計</p>
+            </div>
+            <p class="mt-4">IVR與AI客服的交互流程：</p>
+            <ol class="list-decimal pl-6 mb-4">
+                <li><strong>初始接入</strong>：用戶撥打醫院總機</li>
+                <li><strong>意圖識別</strong>：IVR系統初步識別用戶需求類型</li>
+                <li><strong>智能路由</strong>：符合條件的咨詢自動轉至AI客服</li>
+                <li><strong>語音對話</strong>：AI客服通過語音與用戶進行自然對話</li>
+                <li><strong>服務升級</strong>：複雜問題或用戶要求時轉接人工座席</li>
+                <li><strong>多渠道選項</strong>：提供切換至網頁或APP客服的選項</li>
+            </ol>
+            
+            <h3 class="subsection-title">10.4 技術實現方案</h3>
+            <div class="feature-card">
+                <p>IVR整合的技術實現：</p>
+                <ul class="list-disc pl-6">
+                    <li><strong>SIP/VOIP協議集成</strong>：與醫院電話系統的標準化連接</li>
+                    <li><strong>WebRTC技術</strong>：實現網頁與電話系統的實時通訊</li>
+                    <li><strong>Azure Communication Services</strong>：提供統一的通訊平台</li>
+                    <li><strong>即時語音轉寫</strong>：將電話對話實時轉換為文字輸入</li>
+                    <li><strong>文字轉語音</strong>：將AI回答轉換為自然語音輸出</li>
+                    <li><strong>通話狀態同步</strong>：實時監控和管理通話狀態</li>
+                </ul>
+            </div>
+            
+            <div class="success mt-6">
+                <h4 class="font-semibold">IVR整合效益</h4>
+                <p>IVR與AI客服的整合將帶來以下效益：</p>
+                <ul class="list-disc pl-6">
+                    <li><strong>提升電話服務容量</strong>：減少排隊等待時間</li>
+                    <li><strong>釋放人工座席資源</strong>：AI處理常規諮詢，人工專注複雜問題</li>
+                    <li><strong>提供24/7服務</strong>：非工作時間也能提供基本諮詢</li>
+                    <li><strong>增強用戶體驗</strong>：提供多種交互方式的選擇</li>
+                    <li><strong>數據洞察</strong>：獲取電話諮詢的主題分佈和趨勢</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 多租戶架構設計 -->
+        <div id="多租戶架構" class="section">
+            <h2 class="section-title">11. 多租戶架構設計</h2>
+            <p>系統採用多租戶架構，支持在完成亞東醫院部署後，快速部署至其他醫院，同時確保數據隔離和安全。</p>
+            
+            <h3 class="subsection-title">11.1 多租戶架構概述</h3>
+            <div class="chart-container">
+                <img src="https://i.imgur.com/wLrJovb.png" alt="多租戶架構概述" class="chart">
+                <p class="text-center text-sm text-gray-600 mt-2">圖11.1 多租戶系統架構設計</p>
+            </div>
+            
+            <h3 class="subsection-title">11.2 租戶隔離模式</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="feature-card">
+                    <h4 class="font-semibold">數據隔離策略</h4>
+                    <ul class="list-disc pl-6">
+                        <li><strong>獨立數據庫</strong>：每家醫院使用獨立的數據庫實例</li>
+                        <li><strong>邏輯分區</strong>：共享數據庫中的嚴格租戶分區</li>
+                        <li><strong>存儲隔離</strong>：文件存儲的命名空間隔離</li>
+                        <li><strong>加密策略</strong>：租戶專屬的加密密鑰</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4 class="font-semibold">資源分配模式</h4>
+                    <ul class="list-disc pl-6">
+                        <li><strong>按需計算資源</strong>：基於醫院規模分配計算資源</li>
+                        <li><strong>彈性擴展</strong>：根據使用需求自動擴展資源</li>
+                        <li><strong>共享基礎設施</strong>：共享底層Azure服務</li>
+                        <li><strong>效能隔離</strong>：避免租戶間的效能干擾</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 class="subsection-title">11.3 配置層級化設計</h3>
+            <div class="chart-container">
+                <img src="https://i.imgur.com/E3dV87Y.png" alt="配置層級化設計" class="chart">
+                <p class="text-center text-sm text-gray-600 mt-2">圖11.3 多租戶配置層級設計</p>
+            </div>
+            <p class="mt-4">配置層級說明：</p>
+            <ol class="list-decimal pl-6 mb-4">
+                <li><strong>系統級設置</strong>：所有醫院共享的基礎配置，如對話引擎參數</li>
+                <li><strong>醫院級設置</strong>：醫院特有的配置，如品牌元素、科室結構</li>
+                <li><strong>應用級設置</strong>：功能模塊的定制配置，如掛號推薦算法參數</li>
+            </ol>
+            
+            <h3 class="subsection-title">11.4 快速部署流程</h3>
+            <div class="chart-container">
+                <img src="https://i.imgur.com/8fb730d.png" alt="快速部署流程" class="chart">
+                <p class="text-center text-sm text-gray-600 mt-2">圖11.4 新醫院快速部署流程</p>
+            </div>
+            <p class="mt-4">部署流程說明：</p>
+            <ol class="list-decimal pl-6 mb-4">
+                <li><strong>需求收集</strong>：通過標準化表格收集醫院基本信息</li>
+                <li><strong>環境準備</strong>：創建新租戶環境，配置資源</li>
+                <li><strong>配置導入</strong>：應用適合該醫院類型的配置模板</li>
+                <li><strong>知識庫建立</strong>：導入基礎醫療知識，整合醫院特有內容</li>
+                <li><strong>系統整合</strong>：連接醫院的掛號系統和IVR（如需要）</li>
+                <li><strong>測試與優化</strong>：進行系統測試，根據需求調整配置</li>
+                <li><strong>培訓與上線</strong>：管理人員培訓，系統正式上線</li>
+            </ol>
+            
+            <h3 class="subsection-title">11.5 客製化範圍與管理</h3>
+            <div class="feature-card">
+                <p>多租戶架構下的客製化管理：</p>
+                <ul class="list-disc pl-6">
+                    <li><strong>標準客製化</strong>：無需開發的配置調整，如醫院信息、科室結構</li>
+                    <li><strong>高級客製化</strong>：輕度開發的功能調整，如特殊業務規則</li>
+                    <li><strong>核心定制</strong>：需完整評估的深度調整，如特殊外部系統集成</li>
+                    <li><strong>客製化管理</strong>：變更請求追蹤、影響評估和版本控制</li>
+                </ul>
+            </div>
+            
+            <div class="note mt-6">
+                <h4 class="font-semibold">跨院部署效率比較</h4>
+                <p>多租戶架構大幅提升新醫院部署效率：</p>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>部署項目</th>
+                                <th>首家醫院(亞東)</th>
+                                <th>後續醫院</th>
+                                <th>效率提升</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>需求分析</td>
+                                <td>4-6週</td>
+                                <td>1-2週</td>
+                                <td>75%</td>
+                            </tr>
+                            <tr>
+                                <td>知識庫建立</td>
+                                <td>6-8週</td>
+                                <td>2-3週</td>
+                                <td>67%</td>
+                            </tr>
+                            <tr>
+                                <td>系統配置</td>
+                                <td>3-4週</td>
+                                <td>3-5天</td>
+                                <td>80%</td>
+                            </tr>
+                            <tr>
+                                <td>整合測試</td>
+                                <td>4-5週</td>
+                                <td>1-2週</td>
+                                <td>70%</td>
+                            </tr>
+                            <tr>
+                                <td>上線準備</td>
+                                <td>2-3週</td>
+                                <td>1週</td>
+                                <td>60%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>總耗時</strong></td>
+                                <td><strong>19-26週</strong></td>
+                                <td><strong>5-8週</strong></td>
+                                <td><strong>70%</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 亞東醫院需提供的資料清單 -->
+        <div id="需提供資料" class="section">
+            <h2 class="section-title">12. 亞東醫院需提供的資料清單</h2>
+            <p>為確保系統能夠提供準確的醫療諮詢和科室推薦，亞東醫院需要提供以下資料。</p>
+            
+            <h3 class="subsection-title">12.1 基礎醫療知識資料</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>資料類型</th>
+                            <th>內容說明</th>
+                            <th>用途</th>
+                            <th>格式要求</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>疾病症狀對應表</td>
+                            <td>常見疾病及其典型症狀的對應關係</td>
+                            <td>科室推薦的基礎知識</td>
+                            <td>Excel/CSV</td>
+                        </tr>
+                        <tr>
+                            <td>症狀-科室映射表</td>
+                            <td>各類症狀適合掛號的科室指南</td>
+                            <td>掛號推薦系統核心數據</td>
+                            <td>Excel/PDF/Word</td>
+                        </tr>
+                        <tr>
+                            <td>醫療術語詞庫</td>
+                            <td>常用醫療術語及其通俗解釋</td>
+                            <td>提升系統對醫療術語的理解能力</td>
+                            <td>Excel/CSV</td>
+                        </tr>
+                        <tr>
+                            <td>常見問題與解答</td>
+                            <td>患者常見問題及標準回答</td>
+                            <td>知識庫的基礎內容</td>
+                            <td>Word/Excel</td>
+                        </tr>
+                        <tr>
+                            <td>健康教育資料</td>
+                            <td>各類疾病的預防、保健知識</td>
+                            <td>豐富知識庫內容</td>
+                            <td>PDF/Word/PPT</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3 class="subsection-title">12.2 醫院運營資料</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>資料類型</th>
+                            <th>內容說明</th>
+                            <th>用途</th>
+                            <th>格式要求</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>科室結構資料</td>
+                            <td>醫院各科室的設置、專科方向、位置</td>
+                            <td>科室信息展示與導航</td>
+                            <td>Excel/Word</td>
+                        </tr>
+                        <tr>
+                            <td>醫師資料</td>
+                            <td>醫師姓名、專長、職稱、簡介</td>
+                            <td>醫師推薦與展示</td>
+                            <td>Excel/CSV，含照片</td>
+                        </tr>
+                        <tr>
+                            <td>門診時間表</td>
+                            <td>各科室門診時間安排</td>
+                            <td>掛號時間推薦</td>
+                            <td>Excel/CSV</td>
+                        </tr>
+                        <tr>
+                            <td>掛號規則說明</td>
+                            <td>預約掛號、現場掛號的流程與規則</td>
+                            <td>掛號指南知識</td>
+                            <td>Word/PDF</td>
+                        </tr>
+                        <tr>
+                            <td>醫療服務項目</td>
+                            <td>醫院提供的特色醫療服務介紹</td>
+                            <td>醫療服務咨詢知識</td>
+                            <td>Word/PDF</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3 class="subsection-title">12.3 技術對接資料</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>資料類型</th>
+                            <th>內容說明</th>
+                            <th>用途</th>
+                            <th>格式要求</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>掛號系統API文檔</td>
+                            <td>掛號系統API的詳細說明與示例</td>
+                            <td>掛號功能整合</td>
+                            <td>Word/PDF/Swagger</td>
+                        </tr>
+                        <tr>
+                            <td>IVR系統介面規格</td>
+                            <td>總機IVR系統的接口規格</td>
+                            <td>IVR整合實現</td>
+                            <td>PDF/Word</td>
+                        </tr>
+                        <tr>
+                            <td>醫院網站結構</td>
+                            <td>網站地圖與內容分類</td>
+                            <td>知識爬取配置</td>
+                            <td>Excel/CSV</td>
+                        </tr>
+                        <tr>
+                            <td>Azure環境資訊</td>
+                            <td>醫院Azure環境的配置信息</td>
+                            <td>系統部署準備</td>
+                            <td>Word/PDF</td>
+                        </tr>
+                        <tr>
+                            <td>權限管理規範</td>
+                            <td>系統用戶角色與權限定義</td>
+                            <td>後台權限設計</td>
+                            <td>Word/Excel</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="important mt-6">
+                <h4 class="font-semibold">資料提供注意事項</h4>
+                <ul class="list-disc pl-6">
+                    <li><strong>數據格式</strong>：盡量提供結構化數據，便於系統處理</li>
+                    <li><strong>數據完整性</strong>：確保提供的資料完整準確，特別是症狀-科室映射</li>
+                    <li><strong>更新機制</strong>：建立資料定期更新的機制，確保系統使用最新信息</li>
+                    <li><strong>數據安全</strong>：敏感資料需加密傳輸，並遵循相關法規</li>
+                    <li><strong>授權確認</strong>：確保所提供資料的使用授權，特別是第三方內容</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 時程規劃 -->
+        <div id="時程規劃" class="section">
+            <h2 class="section-title">13. 時程規劃</h2>
+            <p>本專案計劃在兩個月內完成開發和部署，以下為詳細的時程規劃。</p>
+            
+            <h3 class="subsection-title">13.1 整體時程概覽</h3>
+            <div class="chart-container">
+                <img src="https://i.imgur.com/TcLpAY3.png" alt="整體時程概覽" class="chart">
+                <p class="text-center text-sm text-gray-600 mt-2">圖13.1 八週專案時程概覽</p>
+            </div>
+            
+            <h3 class="subsection-title">13.2 詳細時程表</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>階段</th>
+                            <th>工作內容</th>
+                            <th>起始週</th>
+                            <th>結束週</th>
+                            <th>里程碑</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="3">需求分析與規劃</td>
+                            <td>需求收集與確認</td>
+                            <td>第1週</td>
+                            <td>第1週</td>
+                            <td>需求文檔確認</td>
+                        </tr>
+                        <tr>
+                            <td>系統架構設計</td>
+                            <td>第1週</td>
+                            <td>第1週</td>
+                            <td>架構設計文檔</td>
+                        </tr>
+                        <tr>
+                            <td>知識庫規劃</td>
+                            <td>第1週</td>
+                            <td>第2週</td>
+                            <td>知識庫架構確認</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="4">環境搭建與基礎開發</td>
+                            <td>Azure環境部署</td>
+                            <td>第2週</td>
+                            <td>第2週</td>
+                            <td>環境就緒</td>
+                        </tr>
+                        <tr>
+                            <td>Dify平台配置</td>
+                            <td>第2週</td>
+                            <td>第2週</td>
+                            <td>平台配置完成</td>
+                        </tr>
+                        <tr>
+                            <td>前端框架搭建</td>
+                            <td>第2週</td>
+                            <td>第3週</td>
+                            <td>基礎UI可用</td>
+                        </tr>
+                        <tr>
+                            <td>後台管理基礎架構</td>
+                            <td>第2週</td>
+                            <td>第3週</td>
+                            <td>基礎管理功能可用</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="4">知識庫建立與AI訓練</td>
+                            <td>知識導入工具開發</td>
+                            <td>第3週</td>
+                            <td>第3週</td>
+                            <td>導入工具可用</td>
+                        </tr>
+                        <tr>
+                            <td>基礎知識庫導入</td>
+                            <td>第3週</td>
+                            <td>第4週</td>
+                            <td>基礎知識庫建立</td>
+                        </tr>
+                        <tr>
+                            <td>Dify提示詞優化</td>
+                            <td>第3週</td>
+                            <td>第4週</td>
+                            <td>AI對話品質達標</td>
+                        </tr>
+                        <tr>
+                            <td>知識庫測試與優化</td>
+                            <td>第4週</td>
+                            <td>第4週</td>
+                            <td>知識覆蓋率評估</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="4">功能模塊開發</td>
+                            <td>掛號推薦系統開發</td>
+                            <td>第4週</td>
+                            <td>第5週</td>
+                            <td>推薦功能可用</td>
+                        </tr>
+                        <tr>
+                            <td>IVR整合實現</td>
+                            <td>第4週</td>
+                            <td>第5週</td>
+                            <td>IVR連接測試通過</td>
+                        </tr>
+                        <tr>
+                            <td>掛號API對接</td>
+                            <td>第5週</td>
+                            <td>第5週</td>
+                            <td>API連接成功</td>
+                        </tr>
+                        <tr>
+                            <td>多租戶管理開發</td>
+                            <td>第5週</td>
+                            <td>第6週</td>
+                            <td>租戶管理功能可用</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3">整合與測試</td>
+                            <td>系統整合測試</td>
+                            <td>第6週</td>
+                            <td>第6週</td>
+                            <td>整合測試完成</td>
+                        </tr>
+                        <tr>
+                            <td>用戶體驗測試</td>
+                            <td>第6週</td>
+                            <td>第7週</td>
+                            <td>用戶反饋收集</td>
+                        </tr>
+                        <tr>
+                            <td>性能與負載測試</td>
+                            <td>第7週</td>
+                            <td>第7週</td>
+                            <td>性能指標達標</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3">部署與上線</td>
+                            <td>系統最終優化</td>
+                            <td>第7週</td>
+                            <td>第7週</td>
+                            <td>優化完成</td>
+                        </tr>
+                        <tr>
+                            <td>生產環境部署</td>
+                            <td>第7週</td>
+                            <td>第8週</td>
+                            <td>系統部署完成</td>
+                        </tr>
+                        <tr>
+                            <td>系統試運行與監控</td>
+                            <td>第8週</td>
+                            <td>第8週</td>
+                            <td>系統正式上線</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3 class="subsection-title">13.3 關鍵里程碑</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4 class="font-semibold">需求確認完成</h4>
+                    <p>時間：第1週結束</p>
+                    <p>內容：確認系統需求規格、知識庫要求和整合接口，形成最終需求文檔。</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="font-semibold">基礎系統可用</h4>
+                    <p>時間：第3週結束</p>
+                    <p>內容：基礎對話系統可用，前端界面和後台管理系統框架完成。</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="font-semibold">知識庫與AI引擎完成</h4>
+                    <p>時間：第4週結束</p>
+                    <p>內容：完成基礎知識庫建立，AI對話質量達到預期標準。</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="font-semibold">功能模塊完成</h4>
+                    <p>時間：第6週結束</p>
+                    <p>內容：掛號推薦、IVR整合和API連接等核心功能模塊開發完成。</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="font-semibold">系統測試完成</h4>
+                    <p>時間：第7週結束</p>
+                    <p>內容：完成系統整合測試、用戶體驗測試和性能測試，系統達到上線標準。</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="font-semibold">系統正式上線</h4>
+                    <p>時間：第8週結束</p>
+                    <p>內容：系統在生產環境部署完成，正式對用戶開放使用。</p>
+                </div>
+            </div>
+            
+            <div class="note mt-6">
+                <h4 class="font-semibold">時程管理策略</h4>
+                <ul class="list-disc pl-6">
+                    <li><strong>敏捷開發方法</strong>：採用敏捷開發模式，每週進行迭代評審</li>
+                    <li><strong>並行開發</strong>：基礎架構與知識庫建立並行進行，提高效率</li>
+                    <li><strong>風險預留</strong>：關鍵階段預留緩衝時間，應對可能的風險</li>
+                    <li><strong>階段交付</strong>：採用階段性交付，確保核心功能優先實現</li>
+                    <li><strong>緊密溝通</strong>：與亞東醫院團隊保持週期性溝通，及時調整</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 預算估計 -->
+        <div id="預算估計" class="section">
+            <h2 class="section-title">14. 預算估計</h2>
+            <p>以下為本專案的預算估計（不含Azure平台租用費用），包括開發、實施和首年運維成本。</p>
+            
+            <h3 class="subsection-title">14.1 開發與實施費用</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>費用項目</th>
+                            <th>工作內容</th>
+                            <th>費用範圍 (NTD)</th>
+                            <th>說明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>需求分析與設計</td>
+                            <td>需求訪談、系統設計、架構規劃</td>
+                            <td>350,000 - 450,000</td>
+                            <td>包含專業醫療顧問費用</td>
+                        </tr>
+                        <tr>
+                            <td>前端開發</td>
+                            <td>Web介面、用戶體驗設計、響應式適配</td>
+                            <td>400,000 - 500,000</td>
+                            <td>包含語音交互設計</td>
+                        </tr>
+                        <tr>
+                            <td>後端開發</td>
+                            <td>API開發、數據處理、系統整合</td>
+                            <td>450,000 - 550,000</td>
+                            <td>包含IVR整合和掛號系統連接</td>
+                        </tr>
+                        <tr>
+                            <td>AI引擎配置與優化</td>
+                            <td>Dify平台配置、提示詞優化、知識庫結構設計</td>
+                            <td>300,000 - 400,000</td>
+                            <td>包含多租戶架構設計</td>
+                        </tr>
+                        <tr>
+                            <td>知識庫建立</td>
+                            <td>知識收集、整理、導入和優化</td>
+                            <td>250,000 - 350,000</td>
+                            <td>包含專業醫療內容審核</td>
+                        </tr>
+                        <tr>
+                            <td>系統測試</td>
+                            <td>功能測試、整合測試、性能測試</td>
+                            <td>200,000 - 250,000</td>
+                            <td>包含用戶體驗測試</td>
+                        </tr>
+                        <tr>
+                            <td>部署與上線</td>
+                            <td>環境配置、系統部署、初期支持</td>
+                            <td>150,000 - 200,000</td>
+                            <td>不含Azure平台費用</td>
+                        </tr>
+                        <tr>
+                            <td>專案管理</td>
+                            <td>進度管理、風險控制、協調溝通</td>
+                            <td>200,000 - 250,000</td>
+                            <td>全程專案管理</td>
+                        </tr>
+                        <tr>
+                            <td><strong>小計</strong></td>
+                            <td></td>
+                            <td><strong>2,300,000 - 2,950,000</strong></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3 class="subsection-title">14.2 軟體授權費用</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>項目</th>
+                            <th>說明</th>
+                            <th>費用範圍 (NTD)</th>
+                            <th>備註</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Dify平台授權</td>
+                            <td>Dify平台企業版年費</td>
+                            <td>300,000 - 400,000</td>
+                            <td>可根據實際需求選擇版本</td>
+                        </tr>
+                        <tr>
+                            <td>語言模型API調用</td>
+                            <td>GPT系列API首年使用預估</td>
+                            <td>200,000 - 300,000</td>
+                            <td>基於預計對話量估算</td>
+                        </tr>
+                        <tr>
+                            <td>第三方組件授權</td>
+                            <td>語音處理、UI框架等第三方組件</td>
+                            <td>100,000 - 150,000</td>
+                            <td>首年授權費用</td>
+                        </tr>
+                        <tr>
+                            <td><strong>小計</strong></td>
+                            <td></td>
+                            <td><strong>600,000 - 850,000</strong></td>
+                            <td>首年費用</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3 class="subsection-title">14.3 首年維護與支持費用</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>項目</th>
+                            <th>說明</th>
+                            <th>費用範圍 (NTD)</th>
+                            <th>備註</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>技術支持服務</td>
+                            <td>系統技術問題支持與處理</td>
+                            <td>200,000 - 250,000</td>
+                            <td>每年費用，可按需調整</td>
+                        </tr>
+                        <tr>
+                            <td>知識庫維護</td>
+                            <td>知識內容定期更新與優化</td>
+                            <td>150,000 - 200,000</td>
+                            <td>每年費用，可選服務</td>
+                        </tr>
+                        <tr>
+                            <td>系統監控與運維</td>
+                            <td>系統運行監控、故障處理</td>
+                            <td>100,000 - 150,000</td>
+                            <td>每年費用，基礎服務</td>
+                        </tr>
+                        <tr>
+                            <td><strong>小計</strong></td>
+                            <td></td>
+                            <td><strong>450,000 - 600,000</strong></td>
+                            <td>首年費用</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3 class="subsection-title">14.4 總預算摘要</h3>
+            <div class="feature-card">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>費用類別</th>
+                                <th>金額範圍 (NTD)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>開發與實施費用</td>
+                                <td>2,300,000 - 2,950,000</td>
+                            </tr>
+                            <tr>
+                                <td>軟體授權費用</td>
+                                <td>600,000 - 850,000</td>
+                            </tr>
+                            <tr>
+                                <td>首年維護與支持費用</td>
+                                <td>450,000 - 600,000</td>
+                            </tr>
+                            <tr>
+                                <td><strong>總計 (不含Azure平台費用)</strong></td>
+                                <td><strong>3,350,000 - 4,400,000</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="note mt-6">
+                <h4 class="font-semibold">預算說明</h4>
+                <ul class="list-disc pl-6">
+                    <li>本預算為參考估算，實際費用將根據最終需求範圍和系統規格確定</li>
+                    <li>Azure平台費用需根據具體資源配置和使用量單獨估算</li>
+                    <li>支付方式建議採用階段式支付，按專案里程碑節點付款</li>
+                    <li>維護費用可根據實際需求調整服務內容和範圍</li>
+                    <li>系統擴展至其他醫院的費用將另行評估</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 風險評估與應對策略 -->
+        <div id="風險評估" class="section">
+            <h2 class="section-title">15. 風險評估與應對策略</h2>
+            <p>識別專案可能面臨的主要風險，並提出相應的應對策略，確保專案順利進行。</p>
+            
+            <h3 class="subsection-title">15.1 技術風險</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>風險點</th>
+                            <th>風險影響</th>
+                            <th>風險等級</th>
+                            <th>應對策略</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AI回答準確性不足</td>
+                            <td>用戶獲取錯誤醫療信息，影響信任度</td>
+                            <td>高</td>
+                            <td>
+                                <ul class="list-disc pl-4">
+                                    <li>建立嚴格的知識審核機制</li>
+                                    <li>設置置信度閾值，低置信度回答轉人工</li>
+                                    <li>增加醫療免責聲明</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>系統性能不達標</td>
+                            <td>回應延遲，用戶體驗下降</td>
+                            <td>中</td>
+                            <td>
+                                <ul class="list-disc pl-4">
+                                    <li>前期進行負載測試和性能優化</li>
+                                    <li>設計自動擴展機制</li>
+                                    <li>實施性能監控和告警系統</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>IVR整合困難</td>
+                            <td>電話語音服務質量不佳</td>
+                            <td>中</td>
+                            <td>
+                                <ul class="list-disc pl-4">
+                                    <li>前期進行技術可行性詳細評估</li>
+                                    <li>設計階段式整合方案，先實現基礎功能</li>
+                                    <li>與IVR系統供應商緊密合作</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>系統安全漏洞</td>
+                            <td>數據洩露，系統被攻擊</td>
+                            <td>中</td>
+                            <td>
+                                <ul class="list-disc pl-4">
+                                    <li>實施全面的安全測試和審計</li>
+                                    <li>採用Azure安全最佳實踐</li>
+                                    <li>定期更新安全補丁</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3 class="subsection-title">15.2 專案管理風險</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>風險點</th>
+                            <th>風險影響</th>
+                            <th>風險等級</th>
+                            <th>應對策略</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>需求變更頻繁</td>
+                            <td>進度延誤，範圍蔓延</td>
+                            <td>高</td>
+                            <td>
+                                <ul class="list-disc pl-4">
+                                    <li>前期充分溝通，確保需求明確</li>
+                                    <li>建立正式的變更控制流程</li>
+                                    <li>採用敏捷開發，靈活應對變更</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>資源短缺</td>
+                            <td>開發進度延遲</td>
+                            <td>中</td>
+                            <td>
+                                <ul class="list-disc pl-4">
+                                    <li>提前規劃資源需求</li>
+                                    <li>建立備選資源池</li>
+                                    <li>關鍵路徑任務優先分配資源</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>溝通不足</td>
+                            <td>需求理解偏差，返工增加</td>
+                            <td>中</td>
+                            <td>
+                                <ul class="list-disc pl-4">
+                                    <li>建立定期溝通機制</li>
+                                    <li>指定專人負責項目溝通</li>
+                                    <li>使用協作工具增強透明度</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>時程過緊</td>
+                            <td>質量下降，功能縮減</td>
+                            <td>中</td>
+                            <td>
+                                <ul class="list-disc pl-4">
+                                    <li>設計合理的階段目標</li>
+                                    <li>明確功能優先級，確保核心功能</li>
+                                    <li>保留適當緩衝時間</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3 class="subsection-title">15.3 業務與運營風險</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>風險點</th>
+                            <th>風險影響</th>
+                            <th>風險等級</th>
+                            <th>應對策略</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>用戶接受度低</td>
+                            <td>系統使用率不足，投資回報率降低</td>
+                            <td>中</td>
+                            <td>
+                                <ul class="list-disc pl-4">
+                                    <li>前期進行用戶需求調研</li>
+                                    <li>開發過程納入用戶體驗測試</li>
+                                    <li>制定有效的宣傳和推廣策略</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>知識庫內容不足</td>
+                            <td>回答覆蓋率低，用戶滿意度下降</td>
+                            <td>高</td>
+                            <td>
+                                <ul class="list-disc pl-4">
+                                    <li>提前收集全面的知識素材</li>
+                                    <li>建立持續更新機制</li>
+                                    <li>設計未覆蓋問題的處理機制</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>科室推薦準確率低</td>
+                            <td>錯誤推薦影響用戶就診體驗</td>
+                            <td>高</td>
+                            <td>
+                                <ul class="list-disc pl-4">
+                                    <li>收集詳細的症狀-科室映射數據</li>
+                                    <li>邀請專業醫師參與算法設計</li>
+                                    <li>上線前進行大量測試案例驗證</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>API連接問題</td>
+                            <td>掛號功能不可用</td>
+                            <td>中</td>
+                            <td>
+                                <ul class="list-disc pl-4">
+                                    <li>前期進行API兼容性測試</li>
+                                    <li>設計降級方案</li>
+                                    <li>實施API監控告警</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3 class="subsection-title">15.4 風險監控機制</h3>
+            <div class="feature-card">
+                <p>專案將實施以下風險監控機制：</p>
+                <ul class="list-disc pl-6">
+                    <li><strong>風險追蹤表</strong>：定期更新風險狀態和應對進展</li>
+                    <li><strong>週度風險評審</strong>：專案團隊每週評估風險變化</li>
+                    <li><strong>預警指標</strong>：設定關鍵指標閾值，超出時發出預警</li>
+                    <li><strong>應急響應計劃</strong>：制定主要風險的應急處理流程</li>
+                    <li><strong>定期報告</strong>：向項目利益相關方通報風險狀況</li>
+                </ul>
+            </div>
+            
+            <div class="important mt-6">
+                <h4 class="font-semibold">醫療信息安全特別說明</h4>
+                <p>由於涉及醫療信息，系統將特別注重以下風險控制：</p>
+                <ul class="list-disc pl-6">
+                    <li><strong>醫療建議審慎性</strong>：系統明確聲明AI建議不替代專業醫療診斷</li>
+                    <li><strong>個人數據保護</strong>：嚴格遵循相關法規，保護用戶隱私</li>
+                    <li><strong>專業內容審核</strong>：所有醫療相關內容經專業人員審核</li>
+                    <li><strong>應急止損機制</strong>：發現錯誤信息時快速修正並通知用戶</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 結論與建議 -->
+        <div id="結論" class="section">
+            <h2 class="section-title">16. 結論與建議</h2>
+            <p>亞東醫院智能語音文字客服系統將為醫院提供創新的患者服務平台，結合AI技術與專業醫療知識，提升醫患溝通效率和服務質量。</p>
+            
+            <h3 class="subsection-title">16.1 專案價值總結</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="feature-card">
+                    <h4 class="font-semibold">患者價值</h4>
+                    <ul class="list-disc pl-6">
+                        <li>獲得24/7不間斷的醫療諮詢服務</li>
+                        <li>基於症狀的科學化科室推薦</li>
+                        <li>便捷的多渠道互動體驗</li>
+                        <li>減少掛號等待時間，提高就診效率</li>
+                        <li>獲取專業、標準化的醫療咨詢回答</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4 class="font-semibold">醫院價值</h4>
+                    <ul class="list-disc pl-6">
+                        <li>優化醫療資源分配，提高運營效率</li>
+                        <li>減輕客服人員工作負擔，降低人力成本</li>
+                        <li>提升患者滿意度和就診體驗</li>
+                        <li>獲取患者咨詢數據，了解需求趨勢</li>
+                        <li>展示醫院技術創新形象</li>
+                        <li>系統可快速擴展至集團其他醫院</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 class="subsection-title">16.2 實施成功關鍵因素</h3>
+            <div class="feature-card">
+                <p>專案實施成功的關鍵因素：</p>
+                <ol class="list-decimal pl-6">
+                    <li><strong>高質量知識庫</strong>：完整、準確的醫療知識是系統價值的基礎</li>
+                    <li><strong>專業團隊參與</strong>：醫療專家深度參與系統設計和知識審核</li>
+                    <li><strong>用戶體驗優先</strong>：設計友好直觀的交互界面和流程</li>
+                    <li><strong>良好系統整合</strong>：與現有IVR和掛號系統的無縫整合</li>
+                    <li><strong>敏捷實施策略</strong>：採用迭代開發，逐步優化系統功能</li>
+                    <li><strong>持續優化機制</strong>：建立系統持續學習和改進的機制</li>
+                </ol>
+            </div>
+            
+            <h3 class="subsection-title">16.3 後續發展建議</h3>
+            <div class="feature-card">
+                <p>系統上線後的發展建議：</p>
+                <ul class="list-disc pl-6">
+                    <li><strong>功能擴展</strong>：逐步增加預約提醒、檢查結果查詢等功能</li>
+                    <li><strong>多語言支持</strong>：增加英語、日語等語言支持，服務國際患者</li>
+                    <li><strong>電子病歷整合</strong>：在確保安全的前提下，整合患者電子病歷信息</li>
+                    <li><strong>醫院導航服務</strong>：增加院內智能導航功能</li>
+                    <li><strong>醫療教育功能</strong>：擴展健康科普和疾病預防知識推送</li>
+                    <li><strong>遠程醫療對接</strong>：與遠程醫療系統整合，提供線上診療預約</li>
+                </ul>
+            </div>
+            
+            <h3 class="subsection-title">16.4 長期維護策略</h3>
+            <p>為確保系統長期有效運行，建議採取以下維護策略：</p>
+            <ol class="list-decimal pl-6 mb-4">
+                <li><strong>知識庫定期更新</strong>：建立醫療知識季度更新機制</li>
+                <li><strong>用戶反饋分析</strong>：定期分析用戶反饋，持續優化系統</li>
+                <li><strong>性能監控與優化</strong>：監控系統負載，適時調整資源配置</li>
+                <li><strong>技術平台升級</strong>：跟進AI技術發展，適時升級底層技術</li>
+                <li><strong>安全審計與加固</strong>：定期進行安全審計，確保系統安全</li>
+            </ol>
+            
+            <div class="success mt-6">
+                <h4 class="font-semibold">結語</h4>
+                <p>亞東醫院智能語音文字客服系統代表醫療服務與AI技術的深度融合，將為患者提供更便捷、精準的服務體驗，為醫院帶來運營效率的提升。系統的模塊化設計和多租戶架構，不僅滿足亞東醫院的當前需求，還為未來的擴展和創新奠定了堅實基礎。</p>
+                <p>我們期待與亞東醫院緊密合作，共同打造這一創新醫療服務平台，為患者和醫院創造雙贏價值。</p>
+            </div>
+        </div>
+
+        <!-- 頁尾 -->
+        <div class="text-center text-gray-600 mt-10 mb-6">
+            <p>© 2023 亞東醫院智能客服系統規劃計畫書</p>
+            <p>本文檔僅供亞東醫院內部使用</p>
+        </div>
+    </div>
+</body>
+</html>
