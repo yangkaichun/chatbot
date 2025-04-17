@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>目錄 - 亞東醫院智能語音文字客服系統企劃書</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(to bottom right, #ffffff, #f8fbff);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            padding: 60px;
+        }
+        .slide-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .header-line {
+            flex-grow: 1;
+            height: 3px;
+            background: linear-gradient(to right, #0078d4, transparent);
+            margin-left: 20px;
+        }
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0078d4;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .toc-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 120, 212, 0.15);
+            transition: all 0.3s ease;
+        }
+        .toc-item:hover {
+            transform: translateX(5px);
+        }
+        .toc-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(0, 120, 212, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            color: #0078d4;
+            flex-shrink: 0;
+        }
+        .toc-text {
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 500;
+        }
+        .toc-number {
+            color: #0078d4;
+            font-weight: 600;
+            margin-right: 10px;
+            width: 25px;
+            display: inline-block;
+            text-align: right;
+        }
+        .slide-footer {
+            position: absolute;
+            bottom: 30px;
+            left: 60px;
+            right: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #666;
+        }
+        .company-logo {
+            display: flex;
+            align-items: center;
+        }
+        .page-number {
+            font-weight: 500;
+        }
+        .accent-shape {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, rgba(0, 120, 212, 0.1), rgba(0, 78, 140, 0.05));
+            border-radius: 0 0 0 100%;
+            z-index: 0;
+        }
+        .accent-shape-2 {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(0, 120, 212, 0.05), rgba(0, 78, 140, 0.02));
+            border-radius: 0 100% 0 0;
+            z-index: 0;
+        }
+        .slide-content {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="accent-shape"></div>
+        <div class="accent-shape-2"></div>
+        
+        <div class="slide-content">
+            <div class="slide-header">
+                <h1 class="title">目錄</h1>
+                <div class="header-line"></div>
+            </div>
+            
+            <div class="content-grid">
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-info-circle fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">1.</span>前言</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-sitemap fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">2.</span>系統架構</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-desktop fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">3.</span>模擬畫面</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-project-diagram fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">4.</span>系統架構關聯圖</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-cogs fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">5.</span>模擬後臺介面</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-robot fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">6.</span>AI介面</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-cloud fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">7.</span>Azure部屬方式</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-chart-bar fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">8.</span>分析報表</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-database fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">9.</span>知識庫來源及彈性調整後台</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-phone-alt fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">10.</span>IVR整合方案</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-building fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">11.</span>多租戶架構設計</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-clipboard-list fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">12.</span>亞東醫院需提供的資料清單</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-calendar-alt fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">13.</span>時程規劃</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-money-bill-wave fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">14.</span>預算估計</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-shield-alt fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">15.</span>風險評估與應對策略</div>
+                </div>
+                
+                <div class="toc-item">
+                    <div class="toc-icon">
+                        <i class="fas fa-lightbulb fa-lg"></i>
+                    </div>
+                    <div class="toc-text"><span class="toc-number">16.</span>結論與建議</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            <div class="company-logo">
+                <i class="fas fa-building mr-2"></i>
+                遠傳電信股份有限公司
+            </div>
+            <div class="page-number">2 / 16</div>
+        </div>
+    </div>
+</body>
+</html>
